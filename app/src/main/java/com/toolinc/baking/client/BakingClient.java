@@ -25,10 +25,20 @@ public interface BakingClient {
           .client(okHttpClientBuilder.build())
           .build();
 
+  /**
+   * Provides a new client to perform webservice calls.
+   *
+   * @return a new instance of {@link BakingClient}.
+   */
   static BakingClient create() {
     return retrofitClient.create(BakingClient.class);
   }
 
+  /**
+   * Retrieve a collection of recipes from the back end.
+   *
+   * @return a new instance of {@link Recipes}.
+   */
   @GET("2017/May/59121517_baking/baking.json")
   Call<Recipes> recipes();
 }
