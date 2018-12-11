@@ -10,7 +10,6 @@ import com.google.gson.stream.JsonWriter;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.List;
 
 import androidx.annotation.NonNull;
 
@@ -33,7 +32,7 @@ public abstract class Recipes implements Serializable {
     private static final Gson GSON =
         new GsonBuilder().registerTypeAdapter(Recipe.class, Recipe.builder()).create();
 
-    private List<Recipe> recipes;
+    private Recipe[] recipes;
 
     private Builder() {}
 
@@ -51,8 +50,8 @@ public abstract class Recipes implements Serializable {
 
     @Override
     public Recipes read(JsonReader in) throws IOException {
-      Builder builder = GSON.fromJson(in, Builder.class);
-      return builder.build();
+      recipes = GSON.fromJson(in, Recipe[].class);
+      return build();
     }
   }
 }
