@@ -93,13 +93,11 @@ public final class RecipeTest {
             .stream()
             .map(
                 json -> {
-                  Ingredient ingredient = null;
                   try {
-                    ingredient = Ingredient.builder().fromJson(json);
+                    return Ingredient.builder().fromJson(json);
                   } catch (IOException e) {
                     throw new IllegalStateException("Unable to proceed.");
                   }
-                  return ingredient;
                 })
             .collect(Collectors.toList());
     steps =
@@ -107,13 +105,11 @@ public final class RecipeTest {
             .stream()
             .map(
                 json -> {
-                  Step step = null;
                   try {
-                    step = Step.builder().fromJson(json);
+                    return Step.builder().fromJson(json);
                   } catch (IOException exc) {
                     throw new IllegalStateException("Unable to proceed.");
                   }
-                  return step;
                 })
             .collect(Collectors.toList());
   }
