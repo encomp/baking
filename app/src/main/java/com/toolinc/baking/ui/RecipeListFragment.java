@@ -18,7 +18,7 @@ import butterknife.ButterKnife;
 public final class RecipeListFragment extends Fragment {
 
   @BindView(R.id.rv_recipe_list)
-  private RecyclerView rvRecipeList;
+  RecyclerView rvRecipeList;
 
   @Nullable
   @Override

@@ -32,8 +32,7 @@ public abstract class Step implements Serializable {
   }
 
   /**
-   * Builder class to instantiate immutable objects of {@link Step} from the RestApi json
-   * result.
+   * Builder class to instantiate immutable objects of {@link Step} from the RestApi json result.
    */
   public static final class Builder extends TypeAdapter<Step> {
     private static final Gson GSON = new Gson();
@@ -75,7 +74,9 @@ public abstract class Step implements Serializable {
     }
 
     @Override
-    public void write(JsonWriter out, Step value) throws IOException {}
+    public void write(JsonWriter out, Step value) throws IOException {
+      throw new UnsupportedOperationException("This operation is not supported yet...");
+    }
 
     @Override
     public Step read(JsonReader in) throws IOException {

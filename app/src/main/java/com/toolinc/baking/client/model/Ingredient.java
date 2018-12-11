@@ -63,7 +63,9 @@ public abstract class Ingredient implements Serializable {
     }
 
     @Override
-    public void write(JsonWriter out, Ingredient value) {}
+    public void write(JsonWriter out, Ingredient ingredient) {
+      throw new UnsupportedOperationException("This operation is not supported yet...");
+    }
 
     @Override
     public Ingredient read(JsonReader in) throws IOException {

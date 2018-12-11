@@ -58,7 +58,7 @@ public abstract class Recipe implements Serializable {
     @SerializedName("steps")
     private List<Step> steps;
 
-    @SerializedName("serving")
+    @SerializedName("servings")
     private int servingSize;
 
     @SerializedName("image")
@@ -109,7 +109,9 @@ public abstract class Recipe implements Serializable {
     }
 
     @Override
-    public void write(JsonWriter out, Recipe value) throws IOException {}
+    public void write(JsonWriter out, Recipe value) throws IOException {
+      throw new UnsupportedOperationException("This operation is not supported yet...");
+    }
 
     @Override
     public Recipe read(JsonReader in) throws IOException {
