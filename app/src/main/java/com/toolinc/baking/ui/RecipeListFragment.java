@@ -38,7 +38,7 @@ public final class RecipeListFragment extends Fragment
   RecyclerView rvRecipeList;
 
   @BindView(R.id.clpb_loading_indicator)
-  ContentLoadingProgressBar progressBar;
+  ContentLoadingProgressBar contentLoadingProgressBar;
 
   @Nullable
   @Override
@@ -56,7 +56,7 @@ public final class RecipeListFragment extends Fragment
   }
 
   private void fetchMovies(Call<Recipes> call) {
-    progressBar.setVisibility(View.VISIBLE);
+    contentLoadingProgressBar.show();
     Toast.makeText(getContext(), R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
     if (Optional.fromNullable(recipesCall).isPresent()) {
       recipesCall.cancel();
@@ -67,14 +67,14 @@ public final class RecipeListFragment extends Fragment
 
   @Override
   public void onResponse(Call<Recipes> call, Response<Recipes> response) {
-    progressBar.setVisibility(View.INVISIBLE);
+    contentLoadingProgressBar.hide();
     recipes = response.body().recipes();
     refreshRecycleView(recipes);
   }
 
   @Override
   public void onFailure(Call<Recipes> call, Throwable t) {
-    progressBar.setVisibility(View.INVISIBLE);
+    contentLoadingProgressBar.hide();
     Toast.makeText(getContext(), R.string.recipe_loading_error_message, Toast.LENGTH_SHORT).show();
   }
 

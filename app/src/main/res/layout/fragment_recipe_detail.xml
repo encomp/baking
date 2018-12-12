@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="PrivateResource"
-        tools:showIn="@layout/activity_main">
+        tools:showIn="@layout/activity_recipes">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_recipe_detail"
