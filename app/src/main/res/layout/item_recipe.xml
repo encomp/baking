@@ -30,36 +30,33 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
+            <ImageView
+                android:layout_marginTop="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_cheesecake_brown"/>
+
             <TextView
                 style="@style/Widget.Shrine.TextView"
-                android:textSize="@dimen/shrine_section_title_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="@{recipe.name()}"
+                android:textSize="@dimen/shrine_section_title_text_size"
                 tools:text="@string/recipe_tools_title" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <com.google.android.material.chip.Chip
+                style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@string/recipe_serving_size" />
-
-                <TextView
-
-                    style="@style/TextAppearance.Shrine.Filter.SubHead"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="@{Integer.toString(recipe.servingSize())}"
-                    tools:text="@string/recipe_tools_serving_size" />
-            </LinearLayout>
+                android:layout_marginLeft="@dimen/shrine_standard_spacing"
+                android:layout_marginTop="@dimen/shrine_small_spacing"
+                android:backgroundTint="@color/colorAccent"
+                android:padding="@dimen/shrine_small_spacing"
+                android:text="@{Integer.toString(recipe.servingSize())}"
+                app:chipIcon="@drawable/ic_serving_size"
+                tools:text="8" />
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 </layout>
