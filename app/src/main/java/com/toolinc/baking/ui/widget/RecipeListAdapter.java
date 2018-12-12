@@ -42,6 +42,8 @@ public final class RecipeListAdapter
   @Override
   public void onBindViewHolder(@NonNull RecipeViewHolder recipeViewHolder, int position) {
     recipeViewHolder.itemRecipeBinding.setRecipe(recipes.get(position));
+    recipeViewHolder.itemRecipeBinding.ivRecipeIcon.setImageResource(
+        Recipe.loadIcon(recipes.get(position)));
   }
 
   @Override

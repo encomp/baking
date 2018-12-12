@@ -8,9 +8,11 @@ import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.toolinc.baking.R;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,20 @@ import androidx.annotation.NonNull;
 /** Specifies the ingredients, cooking steps and serving size for a specific recipe. */
 @AutoValue
 public abstract class Recipe implements Serializable {
+
+  /** Helper enum to set a specific icon to the */
+  private enum RecipeIcon {
+    BROWNIE(R.drawable.ic_brownie_brown),
+    CHEESE(R.drawable.ic_cheesecake_brown),
+    CAKE(R.drawable.ic_cake_brown),
+    PIE(R.drawable.ic_pie_brown);
+
+    private final int resourceId;
+
+    private RecipeIcon(int resourceId) {
+      this.resourceId = resourceId;
+    }
+  }
 
   public abstract int id();
 
@@ -30,6 +46,14 @@ public abstract class Recipe implements Serializable {
   public abstract int servingSize();
 
   public abstract String image();
+
+  public static final int loadIcon(Recipe recipe) {
+    return Arrays.stream(RecipeIcon.values())
+        .filter(recipeIcon -> recipe.name().toUpperCase().contains(recipeIcon.name()))
+        .findFirst()
+        .get()
+        .resourceId;
+  }
 
   @NonNull
   public static final Builder builder() {
