@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
@@ -45,18 +46,18 @@ public final class RecipeListFragment extends Fragment
       @NonNull LayoutInflater inflater,
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
-
-    final View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-    ButterKnife.bind(this, rootView);
+    final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+    ButterKnife.bind(this, view);
     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
     rvRecipeList.setLayoutManager(linearLayoutManager);
     rvRecipeList.setAdapter(recipeListAdapter);
     fetchMovies(BakingClient.create().recipes());
-    return rootView;
+    return view;
   }
 
   private void fetchMovies(Call<Recipes> call) {
     progressBar.setVisibility(View.VISIBLE);
+    Toast.makeText(getContext(), R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
     if (Optional.fromNullable(recipesCall).isPresent()) {
       recipesCall.cancel();
     }
@@ -74,6 +75,7 @@ public final class RecipeListFragment extends Fragment
   @Override
   public void onFailure(Call<Recipes> call, Throwable t) {
     progressBar.setVisibility(View.INVISIBLE);
+    Toast.makeText(getContext(), R.string.recipe_loading_error_message, Toast.LENGTH_SHORT).show();
   }
 
   @Override

@@ -4,4 +4,6 @@
     <string name="recipe_tools_title">Nutella Pie</string>
     <string name="recipe_tools_serving_size">8</string>
     <string name="recipe_serving_size">Serving Size:</string>
+    <string name="recipe_loading_message">Loading Recipes ...</string>
+    <string name="recipe_loading_error_message">Unable to load recipes !!!</string>
 </resources>
