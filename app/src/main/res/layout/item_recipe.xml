@@ -20,7 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="20dp"
-        app:cardCornerRadius="5dp">
+        app:cardCornerRadius="?attr/cornerRadius"
+        app:cardElevation="@dimen/shrine_section_elevation"
+        app:cardPreventCornerOverlap="false">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,6 +32,7 @@
 
             <TextView
                 style="@style/Widget.Shrine.TextView"
+                android:textSize="@dimen/shrine_section_title_text_size"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
