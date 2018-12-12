@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/master_list_fragment"
+    <FrameLayout
+        android:id="@+id/recipe_list_fragment"
         android:name="com.toolinc.baking.ui.RecipeListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bottom_app_bar"
@@ -19,13 +19,13 @@
         app:backgroundTint="@color/colorPrimary"
         app:fabAlignmentMode="center"
         app:hideOnScroll="true"
-        app:layout_scrollFlags="scroll|enterAlways"
-        app:navigationIcon="@drawable/ic_menu_brown" />
+        app:layout_scrollFlags="scroll|enterAlways" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
+        android:id="@+id/fab_load_recipes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:onClick="onLoadRecipes"
         android:src="@drawable/ic_home"
         app:layout_anchor="@id/bottom_app_bar" />
 
