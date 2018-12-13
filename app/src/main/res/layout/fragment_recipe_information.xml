@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.Design.TabLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/shrine_standard_spacing"
+    android:paddingBottom="@dimen/shrine_standard_spacing">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/shrine_small_spacing"
+        app:cardCornerRadius="?attr/cornerRadius"
+        app:cardElevation="@dimen/shrine_section_elevation"
+        app:cardPreventCornerOverlap="false">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tv_ingredients_label"
+                    style="@style/Widget.Shrine.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/shrine_small_spacing"
+                    android:layout_marginTop="@dimen/shrine_standard_spacing"
+                    android:text="@string/ingredients"
+                    android:textSize="@dimen/shrine_section_title_text_size"
+                    app:layout_constraintEnd_toStartOf="@id/iv_ingredients_icon"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/iv_ingredients_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/shrine_small_spacing"
+                    android:layout_marginTop="@dimen/shrine_standard_spacing"
+                    android:contentDescription="@string/ingredients"
+                    android:padding="@dimen/shrine_small_spacing"
+                    android:src="@drawable/ic_ingredients_brown"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/tv_ingredients_label"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_ingredients"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/shrine_small_spacing"
+                    android:layout_marginTop="@dimen/shrine_small_spacing"
+                    android:layout_marginEnd="@dimen/shrine_small_spacing"
+                    android:layout_marginBottom="@dimen/shrine_small_spacing"
+                    android:padding="@dimen/shrine_small_spacing"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/iv_ingredients_icon" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_instructions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/shrine_small_spacing" />
+</LinearLayout>

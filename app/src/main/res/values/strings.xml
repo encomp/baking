@@ -6,4 +6,8 @@
     <string name="recipe_serving_size">Serving Size:</string>
     <string name="recipe_loading_message">Loading Recipes ...</string>
     <string name="recipe_loading_error_message">Unable to load recipes !!!</string>
+    <!-- -->
+    <string name="instructions">Instructions</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="ingredient_separator">--</string>
 </resources>

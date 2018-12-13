@@ -22,6 +22,11 @@
         <item name="android:minHeight">@dimen/shrine_toolbar_collapsed_height</item>
     </style>
 
+    <style name="Widget.Shrine.NoActionBar" parent="Base.Theme.Shrine">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="Base.Widget.Shrine.Toolbar.Logo" parent="Widget.Shrine.Toolbar">
         <item name="titleTextAppearance">@style/TextAppearance.Shrine.Logo</item>
     </style>

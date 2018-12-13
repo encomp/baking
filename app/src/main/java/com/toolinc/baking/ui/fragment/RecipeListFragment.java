@@ -1,18 +1,19 @@
-package com.toolinc.baking.ui;
+package com.toolinc.baking.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.BakingClient;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Recipes;
+import com.toolinc.baking.ui.RecipeDetailActivity;
 import com.toolinc.baking.ui.widget.RecipeListAdapter;
 
 import androidx.annotation.NonNull;
@@ -56,7 +57,7 @@ public final class RecipeListFragment extends Fragment
     return view;
   }
 
-  void fetchMovies(Call<Recipes> call) {
+  public void fetchMovies(Call<Recipes> call) {
     contentLoadingProgressBar.show();
     Toast.makeText(getContext(), R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
     if (Optional.fromNullable(recipesCall).isPresent()) {
@@ -81,7 +82,9 @@ public final class RecipeListFragment extends Fragment
 
   @Override
   public void onSelected(Recipe recipe) {
-    Snackbar.make(rvRecipeList, recipe.name(), Snackbar.LENGTH_LONG).show();
+    Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+    intent.putExtra(Intent.EXTRA_KEY_EVENT, recipe);
+    startActivity(intent);
   }
 
   private void refreshRecycleView(@Nullable ImmutableList<Recipe> recipes) {
