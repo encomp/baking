@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Baking</string>
     <!-- -->
+    <string name="recipe">Recipe</string>
     <string name="recipe_tools_title">Nutella Pie</string>
     <string name="recipe_tools_serving_size">8</string>
     <string name="recipe_serving_size">Serving Size:</string>

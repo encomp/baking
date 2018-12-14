@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="java.lang.String" />
+
+        <variable
+            name="step"
+            type="com.toolinc.baking.client.model.Step" />
+    </data>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="@dimen/shrine_small_spacing"
+        app:cardCornerRadius="?attr/cornerRadius"
+        app:cardElevation="@dimen/shrine_section_elevation"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_instructions_step"
+                style="@style/Widget.Shrine.TextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/shrine_standard_spacing"
+                android:text="@{String.format(&quot;Step #%d:&quot;, step.id())}"
+                android:textSize="@dimen/shrine_section_title_text_size"
+                app:layout_constraintEnd_toStartOf="@id/iv_instructions_icon"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Step #0:" />
+
+
+            <ImageView
+                android:id="@+id/iv_instructions_icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_marginTop="@dimen/shrine_standard_spacing"
+                android:contentDescription="@string/ingredients"
+                android:padding="@dimen/shrine_small_spacing"
+                android:src="@drawable/ic_instructions_brown"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tv_instructions_step"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_instructions_short_description"
+                style="@style/Widget.Shrine.TextView.SectionHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@{step.shortDescription()}"
+                app:layout_constraintStart_toStartOf="@+id/tv_instructions_step"
+                app:layout_constraintTop_toBottomOf="@+id/iv_instructions_icon"
+                tools:text="Recipe Introduction" />
+
+            <TextView
+                android:id="@+id/tv_instructions_description"
+                style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/shrine_small_spacing"
+                android:padding="@dimen/shrine_small_spacing"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_instructions_short_description"
+                tools:text="Preheat the oven to 350\u00b0F. Butter a 9 deep dish pie pan." />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+</layout>

@@ -41,8 +41,8 @@
 
                 <ImageView
                     android:id="@+id/iv_ingredients_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
                     android:layout_marginStart="@dimen/shrine_small_spacing"
                     android:layout_marginTop="@dimen/shrine_standard_spacing"
                     android:contentDescription="@string/ingredients"

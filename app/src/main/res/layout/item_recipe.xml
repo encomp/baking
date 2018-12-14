@@ -19,10 +19,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_margin="@dimen/shrine_standard_spacing"
+        android:layout_margin="@dimen/shrine_small_spacing"
         app:cardCornerRadius="?attr/cornerRadius"
-        app:cardElevation="@dimen/shrine_section_elevation"
-        app:cardPreventCornerOverlap="false">
+        app:cardElevation="@dimen/shrine_section_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -34,8 +33,9 @@
                 android:id="@+id/iv_recipe_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/shrine_standard_spacing"
+                android:layout_marginStart="@dimen/shrine_standard_spacing"
                 android:layout_marginTop="@dimen/shrine_small_spacing"
+                android:contentDescription="@string/recipe"
                 tools:src="@drawable/ic_pie_brown" />
 
             <TextView
@@ -51,7 +51,7 @@
                 style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/shrine_standard_spacing"
+                android:layout_marginStart="@dimen/shrine_standard_spacing"
                 android:layout_marginTop="@dimen/shrine_small_spacing"
                 android:backgroundTint="@color/colorAccent"
                 android:padding="@dimen/shrine_small_spacing"
