@@ -53,7 +53,7 @@ public final class IngredientListAdapter
     }
   }
 
-  /** Describes a movie item about its place within the RecyclerView. */
+  /** Describes a {@link Ingredient} item about its place within the RecyclerView. */
   public final class IngredientViewHolder extends RecyclerView.ViewHolder {
 
     private ItemIngredientBinding itemIngredientBinding;

@@ -63,7 +63,7 @@ public final class RecipeListAdapter
     }
   }
 
-  /** Describes a movie item about its place within the RecyclerView. */
+  /** Describes a {@link Recipe} item about its place within the RecyclerView. */
   public final class RecipeViewHolder extends RecyclerView.ViewHolder
       implements View.OnClickListener {
 
