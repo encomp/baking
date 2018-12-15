@@ -51,10 +51,6 @@ public final class RecipeListAdapter
     return recipes.size();
   }
 
-  public ImmutableList<Recipe> getRecipes() {
-    return recipes;
-  }
-
   public void setRecipes(@Nullable ImmutableList<Recipe> recipes) {
     if (Optional.fromNullable(recipes).isPresent()) {
       this.recipes = recipes;
