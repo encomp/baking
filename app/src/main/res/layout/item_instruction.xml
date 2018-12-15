@@ -41,7 +41,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Step #0:" />
 
-
             <ImageView
                 android:id="@+id/iv_instructions_icon"
                 android:layout_width="56dp"
@@ -82,5 +81,7 @@
                 tools:text="Preheat the oven to 350\u00b0F. Butter a 9 deep dish pie pan." />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.card.MaterialCardView>
+
 </layout>
