@@ -16,11 +16,17 @@ import androidx.annotation.NonNull;
 @AutoValue
 public abstract class Ingredient implements Serializable {
 
+  private static final String FORMAT = "%s -- %.1f %s";
+
   public abstract float quantity();
 
   public abstract String measure();
 
   public abstract String name();
+
+  public String getIngredientFormat() {
+    return String.format(FORMAT, name(), quantity(), measure());
+  }
 
   @NonNull
   public static final Builder builder() {

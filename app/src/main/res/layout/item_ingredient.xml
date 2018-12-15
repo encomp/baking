@@ -20,7 +20,7 @@
 
         <TextView
             android:id="@+id/tv_ingredient_order"
-            android:layout_width="18dp"
+            android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/shrine_small_spacing"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,36 +30,10 @@
             android:id="@+id/tv_ingredient_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/shrine_small_spacing"
-            android:text="@{ingredient.name()}"
+            android:paddingStart="@dimen/shrine_small_spacing"
+            android:paddingEnd="@dimen/shrine_small_spacing"
+            android:text="@{ingredient.getIngredientFormat()}"
             app:layout_constraintStart_toEndOf="@+id/tv_ingredient_order"
             tools:text="Graham Cracker crumbs" />
-
-        <TextView
-            android:id="@+id/tv_ingredient_separator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/shrine_small_spacing"
-            android:text="@string/ingredient_separator"
-            app:layout_constraintStart_toEndOf="@+id/tv_ingredient_name" />
-
-        <TextView
-            android:id="@+id/tv_ingredient_quantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/shrine_small_spacing"
-            android:text="@{Float.toString(ingredient.quantity())}"
-            app:layout_constraintStart_toEndOf="@+id/tv_ingredient_separator"
-            tools:text="2" />
-
-        <TextView
-            android:id="@+id/tv_ingredient_measure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/shrine_small_spacing"
-            android:layout_marginEnd="8dp"
-            android:text="@{ingredient.measure()}"
-            app:layout_constraintStart_toEndOf="@+id/tv_ingredient_quantity"
-            tools:text="CUPS" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
