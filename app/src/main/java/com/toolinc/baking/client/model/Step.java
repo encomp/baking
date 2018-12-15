@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 @AutoValue
 public abstract class Step implements Serializable {
 
+  private static final String REMOVE_STEP = "^[0-9]+\\. ";
+
   public abstract int id();
 
   public abstract String shortDescription();
@@ -25,6 +27,10 @@ public abstract class Step implements Serializable {
   public abstract String videoUrl();
 
   public abstract String thumbnailUrl();
+
+  public String getDescriptionWithoutStepNumber() {
+    return description().replaceAll(REMOVE_STEP, "");
+  }
 
   @NonNull
   public static final Builder builder() {
