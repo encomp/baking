@@ -23,41 +23,52 @@
         app:cardCornerRadius="?attr/cornerRadius"
         app:cardElevation="@dimen/shrine_section_elevation">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/shrine_small_spacing"
-            android:orientation="vertical">
+            android:layout_margin="@dimen/shrine_small_spacing">
 
             <ImageView
                 android:id="@+id/iv_recipe_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/shrine_standard_spacing"
-                android:layout_marginTop="@dimen/shrine_small_spacing"
+                android:layout_marginTop="@dimen/shrine_standard_spacing"
+                android:layout_marginEnd="@dimen/shrine_standard_spacing"
                 android:contentDescription="@string/recipe"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_pie_brown" />
 
             <TextView
+                android:id="@+id/textView"
                 style="@style/Widget.Shrine.TextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/shrine_standard_spacing"
+                android:layout_marginTop="@dimen/shrine_standard_spacing"
+                android:layout_marginEnd="@dimen/shrine_standard_spacing"
                 android:text="@{recipe.name()}"
                 android:textSize="@dimen/shrine_section_title_text_size"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:text="@string/recipe_tools_title" />
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/shrine_standard_spacing"
-                android:layout_marginTop="@dimen/shrine_small_spacing"
+                android:layout_marginStart="@dimen/shrine_small_spacing"
                 android:backgroundTint="@color/colorAccent"
                 android:padding="@dimen/shrine_small_spacing"
                 android:text="@{Integer.toString(recipe.servingSize())}"
                 app:chipIcon="@drawable/ic_serving_size"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textView"
                 tools:text="8" />
-        </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
     </com.google.android.material.card.MaterialCardView>
+
 </layout>
