@@ -10,6 +10,7 @@ import com.google.common.base.Optional;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.ui.widget.IngredientListAdapter;
+import com.toolinc.baking.ui.widget.InstructionListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,14 +20,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-/** Renders a specific {@link java.util.List} of ingredients. */
+/** Renders a specific {@link java.util.List} of ingredients and instructions. */
 public final class RecipeInformationFragment extends Fragment {
 
   private final IngredientListAdapter ingredientListAdapter = new IngredientListAdapter();
+  private final InstructionListAdapter instructionListAdapter = new InstructionListAdapter();
   private Recipe recipe;
 
   @BindView(R.id.rv_ingredients)
-  RecyclerView rvIngredientList;
+  RecyclerView rvIngredients;
+
+  @BindView(R.id.rv_instructions)
+  RecyclerView rvInstructions;
 
   @Nullable
   @Override
@@ -36,10 +41,14 @@ public final class RecipeInformationFragment extends Fragment {
       @Nullable Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_recipe_information, container, false);
     ButterKnife.bind(this, view);
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+
     ingredientListAdapter.setIngredients(recipe.ingredients());
-    rvIngredientList.setLayoutManager(linearLayoutManager);
-    rvIngredientList.setAdapter(ingredientListAdapter);
+    rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));
+    rvIngredients.setAdapter(ingredientListAdapter);
+
+    instructionListAdapter.setInstructions(recipe.steps());
+    rvInstructions.setLayoutManager(new LinearLayoutManager(getContext()));
+    rvInstructions.setAdapter(instructionListAdapter);
     return view;
   }
 
