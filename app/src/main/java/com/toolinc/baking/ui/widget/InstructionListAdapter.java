@@ -1,6 +1,7 @@
 package com.toolinc.baking.ui.widget;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
@@ -13,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
 /**
  * RecipeListAdapter provides a binding from an {@link ImmutableList} of {@link Step} to the view
  * {@code R.layout.item_instruction} displayed within a RecyclerView.
@@ -21,7 +24,12 @@ public class InstructionListAdapter
     extends RecyclerView.Adapter<InstructionListAdapter.InstructionViewHolder> {
 
   private static final ImmutableList<Step> EMPTY = ImmutableList.copyOf(Lists.newArrayList());
+  private final OnStepSelected onStepSelected;
   private ImmutableList<Step> instructions = EMPTY;
+
+  public InstructionListAdapter(OnStepSelected onStepSelected) {
+    this.onStepSelected = checkNotNull(onStepSelected, "OnStepSelected is missing.");
+  }
 
   @NonNull
   @Override
@@ -51,13 +59,27 @@ public class InstructionListAdapter
   }
 
   /** Describes a {@link Step} item about its place within the RecyclerView. */
-  public final class InstructionViewHolder extends RecyclerView.ViewHolder {
+  public final class InstructionViewHolder extends RecyclerView.ViewHolder
+      implements View.OnClickListener {
 
     private ItemInstructionBinding itemInstructionBinding;
 
     public InstructionViewHolder(@NonNull ItemInstructionBinding itemInstructionBinding) {
       super(itemInstructionBinding.getRoot());
       this.itemInstructionBinding = itemInstructionBinding;
+      this.itemInstructionBinding.mcvInstruction.setOnClickListener(this);
     }
+
+    @Override
+    public void onClick(View v) {
+      onStepSelected.onSelected(instructions.get(getAdapterPosition()), getAdapterPosition());
+    }
+  }
+
+  /** Specifies the behavior upon selection of a {@link Step}. */
+  public interface OnStepSelected {
+
+    /** Specifies the step and its position that has been selected by the user. */
+    void onSelected(Step step, int position);
   }
 }

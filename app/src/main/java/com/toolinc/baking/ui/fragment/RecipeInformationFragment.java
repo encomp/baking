@@ -1,6 +1,6 @@
 package com.toolinc.baking.ui.fragment;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,8 +23,10 @@ import butterknife.ButterKnife;
 /** Renders a specific {@link java.util.List} of ingredients and instructions. */
 public final class RecipeInformationFragment extends Fragment {
 
+  private static final String RECIPE_ARG = "RECIPE";
   private final IngredientListAdapter ingredientListAdapter = new IngredientListAdapter();
-  private final InstructionListAdapter instructionListAdapter = new InstructionListAdapter();
+  private InstructionListAdapter instructionListAdapter;
+  private InstructionListAdapter.OnStepSelected onStepSelected;
   private Recipe recipe;
 
   @BindView(R.id.rv_ingredients)
@@ -46,6 +48,7 @@ public final class RecipeInformationFragment extends Fragment {
     rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));
     rvIngredients.setAdapter(ingredientListAdapter);
 
+    instructionListAdapter = new InstructionListAdapter(onStepSelected);
     instructionListAdapter.setInstructions(recipe.steps());
     rvInstructions.setLayoutManager(new LinearLayoutManager(getContext()));
     rvInstructions.setAdapter(instructionListAdapter);
@@ -53,9 +56,26 @@ public final class RecipeInformationFragment extends Fragment {
   }
 
   @Override
+  public void onAttach(@NonNull Context context) {
+    super.onAttach(context);
+    onStepSelected = (InstructionListAdapter.OnStepSelected) context;
+  }
+
+  @Override
   public void setArguments(@Nullable Bundle bundle) {
-    if (Optional.fromNullable(bundle).isPresent()) {
-      recipe = (Recipe) bundle.getSerializable(Intent.EXTRA_KEY_EVENT);
+    if (Optional.fromNullable(bundle).isPresent()
+        && Optional.fromNullable(bundle.get(RECIPE_ARG)).isPresent()) {
+      recipe = (Recipe) bundle.getSerializable(RECIPE_ARG);
+    } else {
+      throw new IllegalArgumentException("Unable to find a recipe.");
     }
+  }
+
+  public static final RecipeInformationFragment create(Recipe recipe) {
+    RecipeInformationFragment recipeInformationFragment = new RecipeInformationFragment();
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(RECIPE_ARG, recipe);
+    recipeInformationFragment.setArguments(bundle);
+    return recipeInformationFragment;
   }
 }

@@ -6,18 +6,26 @@ import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
+import com.toolinc.baking.client.model.Step;
+import com.toolinc.baking.lifecycle.StepsViewModel;
 import com.toolinc.baking.ui.fragment.RecipeInformationFragment;
+import com.toolinc.baking.ui.fragment.RecipeStepByStepFragment;
+import com.toolinc.baking.ui.widget.InstructionListAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /** Activity that displays the recipe details such as ingredients and instructions. */
-public final class RecipeDetailActivity extends AppCompatActivity {
+public final class RecipeDetailActivity extends AppCompatActivity
+    implements InstructionListAdapter.OnStepSelected,
+        RecipeStepByStepFragment.StepNavigationHandler {
 
   private RecipeInformationFragment recipeInformationFragment;
+  private RecipeStepByStepFragment recipeStepByStepFragment;
   private Recipe recipe;
+  private StepsViewModel stepsViewModel;
 
   @BindView(R.id.fab_back)
   FloatingActionButton goBack;
@@ -30,18 +38,41 @@ public final class RecipeDetailActivity extends AppCompatActivity {
 
     goBack.setOnClickListener((view) -> finish());
 
-    Bundle fragmentArg = new Bundle();
     if (getIntent().hasExtra(Intent.EXTRA_KEY_EVENT)) {
       recipe = (Recipe) getIntent().getSerializableExtra(Intent.EXTRA_KEY_EVENT);
-      fragmentArg.putSerializable(Intent.EXTRA_KEY_EVENT, recipe);
     }
+    stepsViewModel = ViewModelProviders.of(this).get(StepsViewModel.class);
 
-    recipeInformationFragment = new RecipeInformationFragment();
-    recipeInformationFragment.setArguments(fragmentArg);
-    FragmentManager fragmentManager = getSupportFragmentManager();
-    fragmentManager
+    recipeInformationFragment = RecipeInformationFragment.create(recipe);
+    getSupportFragmentManager()
         .beginTransaction()
         .add(R.id.fl_recipe_detail_information, recipeInformationFragment)
+        .commit();
+  }
+
+  @Override
+  public void onSelected(Step step, int position) {
+    recipeStepByStepFragment = RecipeStepByStepFragment.create(step);
+    stepsViewModel.setSteps(recipe.steps(), position);
+    updateStepFragment();
+  }
+
+  @Override
+  public void onPreviousClick() {
+    stepsViewModel.priorStep();
+    updateStepFragment();
+  }
+
+  @Override
+  public void onNextClick() {
+    stepsViewModel.nextStep();
+    updateStepFragment();
+  }
+
+  private void updateStepFragment() {
+    getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
         .commit();
   }
 }

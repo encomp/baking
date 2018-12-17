@@ -10,5 +10,8 @@
     <!-- -->
     <string name="instructions">Instructions</string>
     <string name="ingredients">Ingredients</string>
-    <string name="ingredient_separator">--</string>
+    <!-- -->
+    <string name="download_start_error"></string>
+    <string name="error_no_internet">No Internet connection.</string>
+    <string name="error_loading_video">Unable to load the video.</string>
 </resources>
