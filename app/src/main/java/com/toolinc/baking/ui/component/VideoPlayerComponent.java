@@ -137,7 +137,7 @@ public class VideoPlayerComponent implements LifecycleObserver, Player.EventList
   }
 
   private void setPlayerState(boolean isPlayerControlEnabled, int loadingIndicatorVisibility) {
-    //fragmentBinding.pbVideo.setVisibility(loadingIndicatorVisibility);
+    fragmentBinding.pbVideo.setVisibility(loadingIndicatorVisibility);
     fragmentBinding.pcvVideo.setEnabled(isPlayerControlEnabled);
     fragmentBinding.pcvVideo.setEnabled(isPlayerControlEnabled);
   }
@@ -151,6 +151,6 @@ public class VideoPlayerComponent implements LifecycleObserver, Player.EventList
   }
 
   private void showPlayerErrorMessage(String error) {
-    Snackbar.make(fragmentBinding.gHorizontalHalfCard, error, Snackbar.LENGTH_LONG).show();
+    Snackbar.make(fragmentBinding.pcvVideo, error, Snackbar.LENGTH_LONG).show();
   }
 }
