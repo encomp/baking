@@ -6,8 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.RecipeDetailActivity">
 
-    <FrameLayout
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/fl_recipe_detail_information"
+        style="@style/Widget.Design.TabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

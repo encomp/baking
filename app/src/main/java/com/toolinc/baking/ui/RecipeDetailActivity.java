@@ -54,25 +54,31 @@ public final class RecipeDetailActivity extends AppCompatActivity
   public void onSelected(Step step, int position) {
     recipeStepByStepFragment = RecipeStepByStepFragment.create(step);
     stepsViewModel.setSteps(recipe.steps(), position);
-    updateStepFragment();
+    getSupportFragmentManager()
+        .beginTransaction()
+        .detach(recipeInformationFragment)
+        .add(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
+        .commit();
   }
 
   @Override
   public void onPreviousClick() {
     stepsViewModel.priorStep();
-    updateStepFragment();
+    updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
   }
 
   @Override
   public void onNextClick() {
     stepsViewModel.nextStep();
-    updateStepFragment();
+    updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
   }
 
-  private void updateStepFragment() {
+  private void updateStepFragment(RecipeStepByStepFragment newStep) {
     getSupportFragmentManager()
         .beginTransaction()
-        .replace(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
+        .detach(recipeStepByStepFragment)
+        .add(R.id.fl_recipe_detail_information, newStep)
         .commit();
+    recipeStepByStepFragment = newStep;
   }
 }
