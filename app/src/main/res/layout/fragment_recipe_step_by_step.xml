@@ -3,108 +3,114 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/cl_main_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.google.android.exoplayer2.ui.PlayerView
-            android:id="@+id/pv_video"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/g_horizontalHalf"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.exoplayer2.ui.PlayerControlView
-            android:id="@+id/pcv_video"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginRight="0dp"
-            android:layout_marginBottom="0dp"
-            app:layout_constraintBottom_toBottomOf="@id/pv_video"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent" />
+            android:layout_height="wrap_content">
 
-        <ProgressBar
-            android:id="@+id/pb_video"
-            android:layout_width="42dp"
-            android:layout_height="42dp"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="@id/pv_video"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/pv_video" />
+            <com.google.android.exoplayer2.ui.PlayerView
+                android:id="@+id/pv_video"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toTopOf="@+id/g_horizontalHalf"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/g_horizontalHalf"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.5"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="256dp" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/shrine_small_spacing"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/g_horizontalHalf">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <com.google.android.exoplayer2.ui.PlayerControlView
+                android:id="@+id/pcv_video"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/pv_video"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_description"
-                    style="@style/Widget.Shrine.TextView"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/g_horizontalHalfCard"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/recipe_tools_title" />
+            <ProgressBar
+                android:id="@+id/pb_video"
+                android:layout_width="42dp"
+                android:layout_height="42dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@id/pv_video"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/pv_video" />
 
-                <androidx.constraintlayout.widget.Guideline
-                    android:id="@+id/g_horizontalHalfCard"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.795"
-                    tools:layout_editor_absoluteX="0dp"
-                    tools:layout_editor_absoluteY="256dp" />
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/g_horizontalHalf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintGuide_percent="0.5"
+                tools:layout_editor_absoluteX="0dp"
+                tools:layout_editor_absoluteY="256dp" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_step_number"
-                    style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/shrine_small_spacing"
-                    android:backgroundTint="@color/colorAccent"
-                    app:chipIcon="@drawable/ic_instructions_brown"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_description"
-                    tools:text="1"/>
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/shrine_small_spacing"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/g_horizontalHalf">
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tv_description"
+                        style="@style/Widget.Shrine.TextView"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginBottom="8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/g_horizontalHalfCard"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="@string/recipe_tools_title" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/g_horizontalHalfCard"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintGuide_percent="0.835"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="256dp" />
+
+                    <com.google.android.material.chip.Chip
+                        android:id="@+id/chip_step_number"
+                        style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="@dimen/shrine_small_spacing"
+                        android:backgroundTint="@color/colorAccent"
+                        app:chipIcon="@drawable/ic_instructions_brown"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_description"
+                        tools:text="1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

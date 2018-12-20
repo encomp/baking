@@ -21,6 +21,7 @@ import com.toolinc.baking.R;
 import com.toolinc.baking.databinding.FragmentRecipeStepByStepBinding;
 import com.toolinc.baking.lifecycle.VideoPlayerViewModel;
 
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleObserver;
 import androidx.lifecycle.OnLifecycleEvent;
@@ -145,6 +146,11 @@ public class VideoPlayerComponent implements LifecycleObserver, Player.EventList
   }
 
   private void showPlayerErrorMessage(String error) {
-    Snackbar.make(fragmentBinding.pcvVideo, error, Snackbar.LENGTH_LONG).show();
+    Snackbar snackbar =
+        Snackbar.make(fragmentBinding.clMainLayout, error, Snackbar.LENGTH_LONG)
+            .setAction(R.string.close_action, (View v) -> {});
+    ((CoordinatorLayout.LayoutParams) snackbar.getView().getLayoutParams())
+        .setAnchorId(R.id.pcv_video);
+    snackbar.show();
   }
 }
