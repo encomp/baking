@@ -12,6 +12,7 @@
     <string name="ingredients">Ingredients</string>
     <!-- -->
     <string name="download_start_error"></string>
+    <string name="error_no_video">There is not a video for this step.</string>
     <string name="error_no_internet">No Internet connection.</string>
     <string name="error_loading_video">Unable to load the video.</string>
 </resources>

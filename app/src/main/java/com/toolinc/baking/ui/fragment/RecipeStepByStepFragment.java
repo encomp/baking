@@ -28,6 +28,7 @@ public final class RecipeStepByStepFragment extends Fragment {
   private Step step;
   private StepNavigationHandler stepNavigationHandler;
   private VideoPlayerViewModel mVideoPlayerViewModel;
+  private VideoPlayerComponent videoPlayerComponent;
   private RecipeDetailActivity mActivity;
 
   @Nullable
@@ -45,10 +46,10 @@ public final class RecipeStepByStepFragment extends Fragment {
     fragmentRecipeStepByStepBinding.fabForward.setOnClickListener(
         (view) -> stepNavigationHandler.onNextClick());
 
-    getLifecycle()
-        .addObserver(
-            new VideoPlayerComponent(
-                getContext(), fragmentRecipeStepByStepBinding, mVideoPlayerViewModel));
+    videoPlayerComponent =
+        new VideoPlayerComponent(
+            getContext(), fragmentRecipeStepByStepBinding, mVideoPlayerViewModel);
+    getLifecycle().addObserver(videoPlayerComponent);
 
     return fragmentRecipeStepByStepBinding.getRoot();
   }
@@ -69,6 +70,14 @@ public final class RecipeStepByStepFragment extends Fragment {
       step = (Step) bundle.getSerializable(STEP_ARG);
     } else {
       throw new IllegalArgumentException("Unable to locate a Step.");
+    }
+  }
+
+  @Override
+  public void onDestroy() {
+    super.onDestroy();
+    if (Optional.fromNullable(videoPlayerComponent).isPresent()) {
+      videoPlayerComponent.releasePlayer();
     }
   }
 

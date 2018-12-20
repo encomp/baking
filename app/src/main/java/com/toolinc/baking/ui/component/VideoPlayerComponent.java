@@ -15,6 +15,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.base.Strings;
 import com.toolinc.baking.BakingApplication;
 import com.toolinc.baking.R;
 import com.toolinc.baking.databinding.FragmentRecipeStepByStepBinding;
@@ -107,32 +108,29 @@ public class VideoPlayerComponent implements LifecycleObserver, Player.EventList
   }
 
   private void initializePlayer() {
-    if (mExoPlayer == null) {
-
+    if (mExoPlayer == null && !Strings.isNullOrEmpty(videoPlayerViewModel.getVideoUrl())) {
       mTrackSelector = new DefaultTrackSelector();
       mExoPlayer = ExoPlayerFactory.newSimpleInstance(context, mTrackSelector);
       mExoPlayer.addListener(this);
-
       String userAgent = Util.getUserAgent(context, context.getString(R.string.app_name));
-      MediaSource mediaSource = new ExtractorMediaSource.Factory(new DefaultDataSourceFactory(
-              context, null, new DefaultHttpDataSourceFactory(userAgent, null)))
+      MediaSource mediaSource =
+          new ExtractorMediaSource.Factory(
+                  new DefaultDataSourceFactory(
+                      context, null, new DefaultHttpDataSourceFactory(userAgent, null)))
               .createMediaSource(Uri.parse(videoPlayerViewModel.getVideoUrl()));
       fragmentBinding.pvVideo.setPlayer(mExoPlayer);
-
       mExoPlayer.prepare(mediaSource);
-      //mExoPlayer.seekTo(videoPlayerViewModel.getPosition());
+    } else {
+      showPlayerErrorMessage(context.getString(R.string.error_no_video));
     }
   }
 
-  private void releasePlayer() {
-    if (fragmentBinding.pvVideo != null) {
-      if (mExoPlayer != null) {
-        updateResumePosition();
-        mExoPlayer.stop();
-        mExoPlayer.release();
-        mExoPlayer = null;
-        mTrackSelector = null;
-      }
+  public void releasePlayer() {
+    if (fragmentBinding.pvVideo != null && mExoPlayer != null) {
+      mExoPlayer.stop();
+      mExoPlayer.release();
+      mExoPlayer = null;
+      mTrackSelector = null;
     }
   }
 
@@ -144,10 +142,6 @@ public class VideoPlayerComponent implements LifecycleObserver, Player.EventList
 
   private void setErrorViewsVisibility(boolean isPlayerControlEnabled, int visibility) {
     fragmentBinding.pcvVideo.setEnabled(isPlayerControlEnabled);
-  }
-
-  private void updateResumePosition() {
-    videoPlayerViewModel.setPosition(Math.max(0L, mExoPlayer.getCurrentPosition()));
   }
 
   private void showPlayerErrorMessage(String error) {
