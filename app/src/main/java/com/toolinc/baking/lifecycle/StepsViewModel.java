@@ -30,7 +30,7 @@ public final class StepsViewModel extends ViewModel {
   }
 
   public void priorStep() {
-    if (stepPositionLiveData.getValue() - 1 <= 0) {
+    if (stepPositionLiveData.getValue() - 1 >= 0) {
       stepPositionLiveData.setValue(stepPositionLiveData.getValue() - 1);
       stepLiveData.setValue(stepsLiveData.getValue().get(stepPositionLiveData.getValue()));
     }
