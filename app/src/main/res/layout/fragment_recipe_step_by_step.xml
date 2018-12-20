@@ -54,6 +54,7 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/shrine_small_spacing"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -77,38 +78,29 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:text="@string/recipe_tools_title"/>
+                    tools:text="@string/recipe_tools_title" />
 
                 <androidx.constraintlayout.widget.Guideline
                     android:id="@+id/g_horizontalHalfCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    app:layout_constraintGuide_percent="0.80"
+                    app:layout_constraintGuide_percent="0.795"
                     tools:layout_editor_absoluteX="0dp"
                     tools:layout_editor_absoluteY="256dp" />
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_back"
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_step_number"
+                    style="@style/Widget.Shrine.TextView.SectionHeaderEnd"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/shrine_small_spacing"
-                    android:src="@drawable/ic_left_white"
+                    android:layout_margin="@dimen/shrine_small_spacing"
+                    android:backgroundTint="@color/colorAccent"
+                    app:chipIcon="@drawable/ic_instructions_brown"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/fab_forward"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_description" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/fab_forward"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/shrine_small_spacing"
-                    android:src="@drawable/ic_right_white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/fab_back"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_description" />
+                    app:layout_constraintTop_toBottomOf="@+id/tv_description"
+                    tools:text="1"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -2,7 +2,9 @@ package com.toolinc.baking.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
+import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
@@ -19,8 +21,7 @@ import butterknife.ButterKnife;
 
 /** Activity that displays the recipe details such as ingredients and instructions. */
 public final class RecipeDetailActivity extends AppCompatActivity
-    implements InstructionListAdapter.OnStepSelected,
-        RecipeStepByStepFragment.StepNavigationHandler {
+    implements InstructionListAdapter.OnStepSelected {
 
   private RecipeInformationFragment recipeInformationFragment;
   private RecipeStepByStepFragment recipeStepByStepFragment;
@@ -29,6 +30,9 @@ public final class RecipeDetailActivity extends AppCompatActivity
 
   @BindView(R.id.fab_back)
   FloatingActionButton goBack;
+
+  @BindView(R.id.bottom_app_bar)
+  BottomAppBar bottomAppBar;
 
   @Override
   protected void onCreate(Bundle bundle) {
@@ -54,6 +58,15 @@ public final class RecipeDetailActivity extends AppCompatActivity
   public void onSelected(Step step, int position) {
     recipeStepByStepFragment = RecipeStepByStepFragment.create(step);
     stepsViewModel.setSteps(recipe.steps(), position);
+    bottomAppBar.replaceMenu(R.menu.menu_navigaton);
+    bottomAppBar
+        .getMenu()
+        .findItem(R.id.mi_next_step)
+        .setOnMenuItemClickListener((MenuItem item) -> onItemSelected(item));
+    bottomAppBar
+        .getMenu()
+        .findItem(R.id.mi_prior_step)
+        .setOnMenuItemClickListener((MenuItem item) -> onItemSelected(item));
     getSupportFragmentManager()
         .beginTransaction()
         .detach(recipeInformationFragment)
@@ -61,16 +74,19 @@ public final class RecipeDetailActivity extends AppCompatActivity
         .commit();
   }
 
-  @Override
-  public void onPreviousClick() {
-    stepsViewModel.priorStep();
-    updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
-  }
+  private boolean onItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.mi_next_step:
+        stepsViewModel.nextStep();
+        updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
+        return true;
 
-  @Override
-  public void onNextClick() {
-    stepsViewModel.nextStep();
-    updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
+      case R.id.mi_prior_step:
+        stepsViewModel.priorStep();
+        updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
+        return true;
+    }
+    return false;
   }
 
   private void updateStepFragment(RecipeStepByStepFragment newStep) {

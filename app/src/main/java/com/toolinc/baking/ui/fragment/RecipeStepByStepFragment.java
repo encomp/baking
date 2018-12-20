@@ -26,7 +26,6 @@ public final class RecipeStepByStepFragment extends Fragment {
   private static final String TAG = RecipeStepByStepFragment.class.getSimpleName();
   private static final String STEP_ARG = "STEP";
   private Step step;
-  private StepNavigationHandler stepNavigationHandler;
   private VideoPlayerViewModel mVideoPlayerViewModel;
   private VideoPlayerComponent videoPlayerComponent;
   private RecipeDetailActivity mActivity;
@@ -40,11 +39,8 @@ public final class RecipeStepByStepFragment extends Fragment {
     FragmentRecipeStepByStepBinding fragmentRecipeStepByStepBinding =
         DataBindingUtil.inflate(inflater, R.layout.fragment_recipe_step_by_step, container, false);
 
-    fragmentRecipeStepByStepBinding.tvDescription.setText(step.description());
-    fragmentRecipeStepByStepBinding.fabBack.setOnClickListener(
-        (view) -> stepNavigationHandler.onPreviousClick());
-    fragmentRecipeStepByStepBinding.fabForward.setOnClickListener(
-        (view) -> stepNavigationHandler.onNextClick());
+    fragmentRecipeStepByStepBinding.tvDescription.setText(step.getDescriptionWithoutStepNumber());
+    fragmentRecipeStepByStepBinding.chipStepNumber.setText(step.id() + "");
 
     videoPlayerComponent =
         new VideoPlayerComponent(
@@ -58,7 +54,6 @@ public final class RecipeStepByStepFragment extends Fragment {
   public void onAttach(Context context) {
     super.onAttach(context);
     mActivity = (RecipeDetailActivity) context;
-    stepNavigationHandler = (StepNavigationHandler) context;
     mVideoPlayerViewModel = ViewModelProviders.of(mActivity).get(VideoPlayerViewModel.class);
     mVideoPlayerViewModel.setVideoUrl(step.videoUrl());
   }
@@ -87,12 +82,5 @@ public final class RecipeStepByStepFragment extends Fragment {
     bundle.putSerializable(STEP_ARG, step);
     recipeStepByStepFragment.setArguments(bundle);
     return recipeStepByStepFragment;
-  }
-
-  /** Specifies that the user has selected the prior or the next step for a recipe. */
-  public interface StepNavigationHandler {
-    void onPreviousClick();
-
-    void onNextClick();
   }
 }
