@@ -11,9 +11,9 @@ import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Step;
 import com.toolinc.baking.lifecycle.StepsViewModel;
+import com.toolinc.baking.ui.adapter.InstructionListAdapter;
 import com.toolinc.baking.ui.fragment.RecipeInformationFragment;
 import com.toolinc.baking.ui.fragment.RecipeStepByStepFragment;
-import com.toolinc.baking.ui.widget.InstructionListAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;

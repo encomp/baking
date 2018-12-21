@@ -16,7 +16,7 @@ import com.toolinc.baking.client.BakingClient;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Recipes;
 import com.toolinc.baking.ui.RecipeDetailActivity;
-import com.toolinc.baking.ui.widget.RecipeListAdapter;
+import com.toolinc.baking.ui.adapter.RecipeListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,14 +38,22 @@ public final class RecipeListFragment extends Fragment
   private static final int COLUMN_THRESHOLD = 2;
   private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
+  @BindView(R.id.rv_recipe_list)
+  RecyclerView rvRecipeList;
+  @BindView(R.id.clpb_loading_indicator)
+  ContentLoadingProgressBar contentLoadingProgressBar;
   private Call<Recipes> recipesCall;
   private ImmutableList<Recipe> recipes;
 
-  @BindView(R.id.rv_recipe_list)
-  RecyclerView rvRecipeList;
-
-  @BindView(R.id.clpb_loading_indicator)
-  ContentLoadingProgressBar contentLoadingProgressBar;
+  private static int calculateNoOfColumns(Context context) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
+    if (noOfColumns < COLUMN_THRESHOLD) {
+      noOfColumns = MIN_NUM_COLS;
+    }
+    return noOfColumns;
+  }
 
   @Nullable
   @Override
@@ -96,15 +104,5 @@ public final class RecipeListFragment extends Fragment
   private void refreshRecycleView(@Nullable ImmutableList<Recipe> recipes) {
     recipeListAdapter.setRecipes(recipes);
     rvRecipeList.setAdapter(recipeListAdapter);
-  }
-
-  private static int calculateNoOfColumns(Context context) {
-    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-    int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
-    if (noOfColumns < COLUMN_THRESHOLD) {
-      noOfColumns = MIN_NUM_COLS;
-    }
-    return noOfColumns;
   }
 }

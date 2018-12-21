@@ -1,4 +1,4 @@
-package com.toolinc.baking.ui.widget;
+package com.toolinc.baking.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;

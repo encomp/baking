@@ -9,8 +9,8 @@ import android.view.ViewGroup;
 import com.google.common.base.Optional;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
-import com.toolinc.baking.ui.widget.IngredientListAdapter;
-import com.toolinc.baking.ui.widget.InstructionListAdapter;
+import com.toolinc.baking.ui.adapter.IngredientListAdapter;
+import com.toolinc.baking.ui.adapter.InstructionListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,15 +25,21 @@ public final class RecipeInformationFragment extends Fragment {
 
   private static final String RECIPE_ARG = "RECIPE";
   private final IngredientListAdapter ingredientListAdapter = new IngredientListAdapter();
+  @BindView(R.id.rv_ingredients)
+  RecyclerView rvIngredients;
+  @BindView(R.id.rv_instructions)
+  RecyclerView rvInstructions;
   private InstructionListAdapter instructionListAdapter;
   private InstructionListAdapter.OnStepSelected onStepSelected;
   private Recipe recipe;
 
-  @BindView(R.id.rv_ingredients)
-  RecyclerView rvIngredients;
-
-  @BindView(R.id.rv_instructions)
-  RecyclerView rvInstructions;
+  public static final RecipeInformationFragment create(Recipe recipe) {
+    RecipeInformationFragment recipeInformationFragment = new RecipeInformationFragment();
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(RECIPE_ARG, recipe);
+    recipeInformationFragment.setArguments(bundle);
+    return recipeInformationFragment;
+  }
 
   @Nullable
   @Override
@@ -69,13 +75,5 @@ public final class RecipeInformationFragment extends Fragment {
     } else {
       throw new IllegalArgumentException("Unable to find a recipe.");
     }
-  }
-
-  public static final RecipeInformationFragment create(Recipe recipe) {
-    RecipeInformationFragment recipeInformationFragment = new RecipeInformationFragment();
-    Bundle bundle = new Bundle();
-    bundle.putSerializable(RECIPE_ARG, recipe);
-    recipeInformationFragment.setArguments(bundle);
-    return recipeInformationFragment;
   }
 }

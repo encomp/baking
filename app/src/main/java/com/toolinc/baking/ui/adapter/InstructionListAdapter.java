@@ -1,4 +1,4 @@
-package com.toolinc.baking.ui.widget;
+package com.toolinc.baking.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,6 +58,13 @@ public final class InstructionListAdapter
     return instructions.size();
   }
 
+  /** Specifies the behavior upon selection of a {@link Step}. */
+  public interface OnStepSelected {
+
+    /** Specifies the step and its position that has been selected by the user. */
+    void onSelected(Step step, int position);
+  }
+
   /** Describes a {@link Step} item about its place within the RecyclerView. */
   public final class InstructionViewHolder extends RecyclerView.ViewHolder
       implements View.OnClickListener {
@@ -74,12 +81,5 @@ public final class InstructionListAdapter
     public void onClick(View v) {
       onStepSelected.onSelected(instructions.get(getAdapterPosition()), getAdapterPosition());
     }
-  }
-
-  /** Specifies the behavior upon selection of a {@link Step}. */
-  public interface OnStepSelected {
-
-    /** Specifies the step and its position that has been selected by the user. */
-    void onSelected(Step step, int position);
   }
 }

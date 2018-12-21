@@ -1,4 +1,4 @@
-package com.toolinc.baking.ui.widget;
+package com.toolinc.baking.ui.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +59,13 @@ public final class RecipeListAdapter
     }
   }
 
+  /** Specifies the behavior upon selection of a {@link Recipe}. */
+  public interface OnRecipeSelected {
+
+    /** Specifies the recipe that has been selected by the user. */
+    void onSelected(Recipe recipe);
+  }
+
   /** Describes a {@link Recipe} item about its place within the RecyclerView. */
   public final class RecipeViewHolder extends RecyclerView.ViewHolder
       implements View.OnClickListener {
@@ -75,12 +82,5 @@ public final class RecipeListAdapter
     public void onClick(View view) {
       onRecipeSelected.onSelected(recipes.get(getAdapterPosition()));
     }
-  }
-
-  /** Specifies the behavior upon selection of a {@link Recipe}. */
-  public interface OnRecipeSelected {
-
-    /** Specifies the recipe that has been selected by the user. */
-    void onSelected(Recipe recipe);
   }
 }
