@@ -17,7 +17,6 @@ import com.google.android.exoplayer2.upstream.cache.CacheDataSourceFactory;
 import com.google.android.exoplayer2.upstream.cache.NoOpCacheEvictor;
 import com.google.android.exoplayer2.upstream.cache.SimpleCache;
 import com.google.android.exoplayer2.util.Util;
-import com.toolinc.baking.offline.BakingDownloadManager;
 
 import java.io.File;
 
@@ -27,7 +26,6 @@ import java.io.File;
 public class BakingApplication extends Application {
 
   private static final String DOWNLOAD_ACTION_FILE = "actions";
-  private static final String DOWNLOAD_TRACKER_ACTION_FILE = "tracked_actions";
   private static final String DOWNLOAD_CONTENT_DIRECTORY = "downloads";
   private static final int MAX_SIMULTANEOUS_DOWNLOADS = 2;
 
@@ -36,7 +34,6 @@ public class BakingApplication extends Application {
   private File downloadDirectory;
   private Cache downloadCache;
   private DownloadManager downloadManager;
-  private BakingDownloadManager downloadTracker;
 
   @Override
   public void onCreate() {
@@ -71,11 +68,6 @@ public class BakingApplication extends Application {
     return downloadManager;
   }
 
-  public BakingDownloadManager getBakingDownloadManager() {
-    initDownloadManager();
-    return downloadTracker;
-  }
-
   private synchronized void initDownloadManager() {
     if (downloadManager == null) {
       DownloaderConstructorHelper downloaderConstructorHelper =
@@ -86,12 +78,6 @@ public class BakingApplication extends Application {
               MAX_SIMULTANEOUS_DOWNLOADS,
               DownloadManager.DEFAULT_MIN_RETRY_COUNT,
               new File(getDownloadDirectory(), DOWNLOAD_ACTION_FILE));
-      downloadTracker =
-          new BakingDownloadManager(
-              /* context= */ this,
-              buildDataSourceFactory(),
-              new File(getDownloadDirectory(), DOWNLOAD_TRACKER_ACTION_FILE));
-      downloadManager.addListener(downloadTracker);
     }
   }
 
