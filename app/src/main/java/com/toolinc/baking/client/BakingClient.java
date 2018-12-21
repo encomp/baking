@@ -13,7 +13,7 @@ import retrofit2.http.GET;
 /**
  * Specifies the contract of the information that will be retrieve information from the recipe api
  */
-public interface BakingClient {
+interface BakingClient {
 
   static final GsonBuilder gsonBuilder =
       new GsonBuilder().registerTypeAdapter(Recipes.class, Recipes.builder());

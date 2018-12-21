@@ -12,48 +12,40 @@ import android.widget.Toast;
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
 import com.toolinc.baking.R;
-import com.toolinc.baking.client.BakingClient;
+import com.toolinc.baking.client.RecipeClient;
 import com.toolinc.baking.client.model.Recipe;
-import com.toolinc.baking.client.model.Recipes;
+import com.toolinc.baking.test.BakingIdlingResource;
 import com.toolinc.baking.ui.RecipeDetailActivity;
 import com.toolinc.baking.ui.adapter.RecipeListAdapter;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.VisibleForTesting;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /** Renders a specific {@link java.util.List} of recipes. */
 public final class RecipeListFragment extends Fragment
-    implements RecipeListAdapter.OnRecipeSelected, Callback<Recipes> {
+    implements RecipeListAdapter.OnRecipeSelected, RecipeClient.RecipeCallback {
 
   private static final int SCALING_FACTOR = 400;
   private static final int COLUMN_THRESHOLD = 2;
   private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
+  private final RecipeClient recipeClient = new RecipeClient(this);
+  @VisibleForTesting Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
+
   @BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
+
   @BindView(R.id.clpb_loading_indicator)
   ContentLoadingProgressBar contentLoadingProgressBar;
-  private Call<Recipes> recipesCall;
-  private ImmutableList<Recipe> recipes;
 
-  private static int calculateNoOfColumns(Context context) {
-    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
-    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-    int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
-    if (noOfColumns < COLUMN_THRESHOLD) {
-      noOfColumns = MIN_NUM_COLS;
-    }
-    return noOfColumns;
-  }
+  private ImmutableList<Recipe> recipes;
 
   @Nullable
   @Override
@@ -67,29 +59,25 @@ public final class RecipeListFragment extends Fragment
         new GridLayoutManager(getContext(), calculateNoOfColumns(getContext()));
     rvRecipeList.setLayoutManager(layoutManager);
     rvRecipeList.setAdapter(recipeListAdapter);
-    fetchMovies(BakingClient.create().recipes());
+    fetchMovies();
     return view;
   }
 
-  public void fetchMovies(Call<Recipes> call) {
+  public void fetchMovies() {
     contentLoadingProgressBar.show();
     Toast.makeText(getContext(), R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
-    if (Optional.fromNullable(recipesCall).isPresent()) {
-      recipesCall.cancel();
-    }
-    recipesCall = call;
-    recipesCall.enqueue(this);
+    recipeClient.fetchMovies(bakingIdlingResource);
   }
 
   @Override
-  public void onResponse(Call<Recipes> call, Response<Recipes> response) {
+  public void onSuccess(ImmutableList<Recipe> recipes) {
     contentLoadingProgressBar.hide();
-    recipes = response.body().recipes();
+    this.recipes = recipes;
     refreshRecycleView(recipes);
   }
 
   @Override
-  public void onFailure(Call<Recipes> call, Throwable t) {
+  public void onFailure(String message) {
     contentLoadingProgressBar.hide();
     Toast.makeText(getContext(), R.string.recipe_loading_error_message, Toast.LENGTH_SHORT).show();
   }
@@ -104,5 +92,15 @@ public final class RecipeListFragment extends Fragment
   private void refreshRecycleView(@Nullable ImmutableList<Recipe> recipes) {
     recipeListAdapter.setRecipes(recipes);
     rvRecipeList.setAdapter(recipeListAdapter);
+  }
+
+  private static int calculateNoOfColumns(Context context) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
+    if (noOfColumns < COLUMN_THRESHOLD) {
+      noOfColumns = MIN_NUM_COLS;
+    }
+    return noOfColumns;
   }
 }

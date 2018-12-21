@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.toolinc.baking.R;
-import com.toolinc.baking.client.BakingClient;
 import com.toolinc.baking.ui.fragment.RecipeListFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +25,6 @@ public final class RecipesActivity extends AppCompatActivity {
   }
 
   public void onLoadRecipes(View v) {
-    recipeListFragment.fetchMovies(BakingClient.create().recipes());
+    recipeListFragment.fetchMovies();
   }
 }
