@@ -34,6 +34,9 @@ import retrofit2.Response;
 public final class RecipeListFragment extends Fragment
     implements RecipeListAdapter.OnRecipeSelected, Callback<Recipes> {
 
+  private static final int SCALING_FACTOR = 400;
+  private static final int COLUMN_THRESHOLD = 2;
+  private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
   private Call<Recipes> recipesCall;
   private ImmutableList<Recipe> recipes;
@@ -98,10 +101,9 @@ public final class RecipeListFragment extends Fragment
   private static int calculateNoOfColumns(Context context) {
     DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
     float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-    int scalingFactor = 400;
-    int noOfColumns = (int) (dpWidth / scalingFactor);
-    if (noOfColumns < 2) {
-      noOfColumns = 1;
+    int noOfColumns = (int) (dpWidth / SCALING_FACTOR);
+    if (noOfColumns < COLUMN_THRESHOLD) {
+      noOfColumns = MIN_NUM_COLS;
     }
     return noOfColumns;
   }
