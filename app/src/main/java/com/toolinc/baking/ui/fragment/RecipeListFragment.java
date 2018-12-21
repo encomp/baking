@@ -1,7 +1,9 @@
 package com.toolinc.baking.ui.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,8 +52,9 @@ public final class RecipeListFragment extends Fragment
       @Nullable Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
     ButterKnife.bind(this, view);
-    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-    rvRecipeList.setLayoutManager(linearLayoutManager);
+    GridLayoutManager layoutManager =
+        new GridLayoutManager(getContext(), calculateNoOfColumns(getContext()));
+    rvRecipeList.setLayoutManager(layoutManager);
     rvRecipeList.setAdapter(recipeListAdapter);
     fetchMovies(BakingClient.create().recipes());
     return view;
@@ -90,5 +93,16 @@ public final class RecipeListFragment extends Fragment
   private void refreshRecycleView(@Nullable ImmutableList<Recipe> recipes) {
     recipeListAdapter.setRecipes(recipes);
     rvRecipeList.setAdapter(recipeListAdapter);
+  }
+
+  private static int calculateNoOfColumns(Context context) {
+    DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
+    float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+    int scalingFactor = 400;
+    int noOfColumns = (int) (dpWidth / scalingFactor);
+    if (noOfColumns < 2) {
+      noOfColumns = 1;
+    }
+    return noOfColumns;
   }
 }
