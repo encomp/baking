@@ -28,7 +28,8 @@ import androidx.lifecycle.OnLifecycleEvent;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-public class VideoPlayerComponent implements LifecycleObserver, Player.EventListener {
+/** Defines a video player component that listens to life cycle owner. */
+public final class VideoPlayerComponent implements LifecycleObserver, Player.EventListener {
 
   private final Context context;
   private final FragmentRecipeStepByStepBinding fragmentBinding;

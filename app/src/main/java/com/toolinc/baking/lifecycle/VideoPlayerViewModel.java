@@ -3,6 +3,7 @@ package com.toolinc.baking.lifecycle;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/** Defines a new {@link ViewModel} for the {@link VideoPlayerViewModel}. */
 public final class VideoPlayerViewModel extends ViewModel {
 
   private final MutableLiveData<Long> mldPosition = new MutableLiveData<>();

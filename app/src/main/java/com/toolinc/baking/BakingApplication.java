@@ -23,7 +23,7 @@ import java.io.File;
 /**
  * Placeholder application to facilitate overriding Application methods for debugging and testing.
  */
-public class BakingApplication extends Application {
+public final class BakingApplication extends Application {
 
   private static final String DOWNLOAD_ACTION_FILE = "actions";
   private static final String DOWNLOAD_CONTENT_DIRECTORY = "downloads";

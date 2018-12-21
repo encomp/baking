@@ -20,7 +20,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
  * RecipeListAdapter provides a binding from an {@link ImmutableList} of {@link Step} to the view
  * {@code R.layout.item_instruction} displayed within a RecyclerView.
  */
-public class InstructionListAdapter
+public final class InstructionListAdapter
     extends RecyclerView.Adapter<InstructionListAdapter.InstructionViewHolder> {
 
   private static final ImmutableList<Step> EMPTY = ImmutableList.copyOf(Lists.newArrayList());
