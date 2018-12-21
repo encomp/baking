@@ -3,10 +3,10 @@ package com.toolinc.baking.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.common.base.Optional;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Step;
@@ -16,6 +16,7 @@ import com.toolinc.baking.ui.fragment.RecipeStepByStepFragment;
 import com.toolinc.baking.ui.widget.InstructionListAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,8 @@ public final class RecipeDetailActivity extends AppCompatActivity
   private RecipeStepByStepFragment recipeStepByStepFragment;
   private Recipe recipe;
   private StepsViewModel stepsViewModel;
+  private NestedScrollView nsv_Video;
+  private boolean tablet;
 
   @BindView(R.id.fab_back)
   FloatingActionButton goBack;
@@ -41,18 +44,22 @@ public final class RecipeDetailActivity extends AppCompatActivity
     setContentView(R.layout.activity_recipe_detail);
     ButterKnife.bind(this);
 
+    nsv_Video = findViewById(R.id.fl_recipe_detail_video);
+    tablet = Optional.fromNullable(nsv_Video).isPresent();
     goBack.setOnClickListener((view) -> finish());
-
     if (getIntent().hasExtra(Intent.EXTRA_KEY_EVENT)) {
       recipe = (Recipe) getIntent().getSerializableExtra(Intent.EXTRA_KEY_EVENT);
     }
     stepsViewModel = ViewModelProviders.of(this).get(StepsViewModel.class);
-
     recipeInformationFragment = RecipeInformationFragment.create(recipe);
     getSupportFragmentManager()
         .beginTransaction()
         .add(R.id.fl_recipe_detail_information, recipeInformationFragment)
         .commit();
+    if (tablet) {
+      stepsViewModel.setSteps(recipe.steps(), 0);
+      onSelected(stepsViewModel.getCurrentStep(), 0);
+    }
   }
 
   @Override
@@ -68,11 +75,18 @@ public final class RecipeDetailActivity extends AppCompatActivity
         .getMenu()
         .findItem(R.id.mi_prior_step)
         .setOnMenuItemClickListener((MenuItem item) -> onItemSelected(item));
-    getSupportFragmentManager()
-        .beginTransaction()
-        .detach(recipeInformationFragment)
-        .add(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
-        .commit();
+    if (tablet) {
+      getSupportFragmentManager()
+          .beginTransaction()
+          .replace(R.id.fl_recipe_detail_video, recipeStepByStepFragment)
+          .commit();
+    } else {
+      getSupportFragmentManager()
+          .beginTransaction()
+          .detach(recipeInformationFragment)
+          .add(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
+          .commit();
+    }
   }
 
   private boolean onItemSelected(MenuItem item) {
@@ -91,11 +105,18 @@ public final class RecipeDetailActivity extends AppCompatActivity
   }
 
   private void updateStepFragment(RecipeStepByStepFragment newStep) {
-    getSupportFragmentManager()
-        .beginTransaction()
-        .detach(recipeStepByStepFragment)
-        .add(R.id.fl_recipe_detail_information, newStep)
-        .commit();
+    if (tablet) {
+      getSupportFragmentManager()
+          .beginTransaction()
+          .replace(R.id.fl_recipe_detail_video, newStep)
+          .commit();
+    } else {
+      getSupportFragmentManager()
+          .beginTransaction()
+          .detach(recipeStepByStepFragment)
+          .add(R.id.fl_recipe_detail_information, newStep)
+          .commit();
+    }
     recipeStepByStepFragment = newStep;
   }
 }
