@@ -1,6 +1,7 @@
 package com.toolinc.baking.client.model;
 
 import com.google.gson.stream.JsonWriter;
+import com.toolinc.baking.util.JsonUnmarshallerHelper;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,7 +17,7 @@ import static com.google.common.truth.Truth.assertThat;
 public final class IngredientTest {
 
   private static final String JSON =
-      "{\"quantity\": 2, \"measure\": \"CUP\", \"ingredient\": \"Graham Cracker crumbs\"}";
+      JsonUnmarshallerHelper.toString(IngredientTest.class, "ingredient_1.json");
   private static final JsonWriter JSON_WRITER =
       new JsonWriter(new PrintWriter(new ByteArrayOutputStream(10)));
 

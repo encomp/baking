@@ -15,13 +15,15 @@ import androidx.test.platform.app.InstrumentationRegistry;
 /** Helper class to unrmashall json files. */
 public final class JsonUnmarshallerHelper {
 
+  private JsonUnmarshallerHelper() {}
+
   public static final Recipe toRecipe(String fileName) {
     try {
       Context ctx = InstrumentationRegistry.getInstrumentation().getContext();
       InputStream is = ctx.getResources().getAssets().open(fileName);
       return Recipe.builder().fromJson(readTextStream(is));
     } catch (IOException exception) {
-      throw new IllegalStateException("Unable to unmarshall to a Json object.");
+      throw new IllegalStateException("Unable to unmarshal into a recipe instance.");
     }
   }
 
