@@ -1,0 +1,18 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/appwidget_text"
+        style="@style/Widget.Shrine.TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/shrine_standard_spacing"
+        android:layout_marginTop="@dimen/shrine_standard_spacing"
+        android:layout_marginEnd="@dimen/shrine_standard_spacing"
+        android:text="test"
+        android:textSize="@dimen/shrine_section_title_text_size" />
+
+</FrameLayout>

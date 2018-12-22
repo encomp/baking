@@ -13,4 +13,6 @@
     <dimen name="shrine_section_header_text_size">16sp</dimen>
     <dimen name="shrine_section_title_text_size">26sp</dimen>
     <dimen name="shrine_seekbar_padding">12dp</dimen>
+
+    <dimen name="widget_margin">8dp</dimen>
 </resources>
