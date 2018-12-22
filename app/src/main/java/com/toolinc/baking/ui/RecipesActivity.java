@@ -6,13 +6,15 @@ import android.view.View;
 import com.toolinc.baking.R;
 import com.toolinc.baking.ui.fragment.RecipeListFragment;
 
+import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
 /** Main activity that displays a {@link com.toolinc.baking.client.model.Recipes}. */
 public final class RecipesActivity extends AppCompatActivity {
 
-  private RecipeListFragment recipeListFragment;
+  @VisibleForTesting
+  RecipeListFragment recipeListFragment;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {

@@ -37,7 +37,7 @@ public final class RecipeListFragment extends Fragment
   private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
   private final RecipeClient recipeClient = new RecipeClient(this);
-  @VisibleForTesting Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
+  private Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
 
   @BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
@@ -102,5 +102,10 @@ public final class RecipeListFragment extends Fragment
       noOfColumns = MIN_NUM_COLS;
     }
     return noOfColumns;
+  }
+
+  @VisibleForTesting
+  public void setBakingIdlingResource(BakingIdlingResource bakingIdlingResource) {
+    this.bakingIdlingResource = Optional.fromNullable(bakingIdlingResource);
   }
 }
