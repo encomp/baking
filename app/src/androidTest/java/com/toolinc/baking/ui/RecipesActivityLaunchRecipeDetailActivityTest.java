@@ -29,10 +29,9 @@ import static org.hamcrest.core.AllOf.allOf;
 /** Tests for {@link RecipesActivity} */
 @LargeTest
 @RunWith(AndroidJUnit4ClassRunner.class)
-public final class RecipesActivityIdlingTest {
+public final class RecipesActivityLaunchRecipeDetailActivityTest {
 
-  private static final Recipe RECIPE =
-      JsonUnmarshallerHelper.toRecipe("recipe_number_1.json");
+  private static final Recipe RECIPE = JsonUnmarshallerHelper.toRecipe("recipe_number_1.json");
   private final BakingIdlingResource mBakingIdlingResource = new BakingIdlingResource();
 
   @Rule
@@ -45,8 +44,6 @@ public final class RecipesActivityIdlingTest {
         .getActivity()
         .recipeListFragment
         .setBakingIdlingResource(mBakingIdlingResource);
-
-    // To prove that the test fails, omit this call:
     IdlingRegistry.getInstance().register(mBakingIdlingResource);
   }
 
