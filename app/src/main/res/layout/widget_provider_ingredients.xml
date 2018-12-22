@@ -56,12 +56,15 @@
         </LinearLayout>
 
 
-        <ListView
-            android:id="@+id/lv_ingredients"
+        <TextView
+            android:textSize="@dimen/shrine_section_header_text_size"
+            android:id="@+id/tv_ingredients"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/ll_title"
             android:background="@color/colorPrimary"
-            android:padding="@dimen/shrine_small_spacing" />
+            android:padding="@dimen/shrine_small_spacing"
+            android:paddingStart="@dimen/shrine_small_spacing"
+            android:paddingEnd="@dimen/shrine_small_spacing" />
     </RelativeLayout>
 </RelativeLayout>

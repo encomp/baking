@@ -55,6 +55,30 @@ public abstract class Recipe implements Serializable {
         .resourceId;
   }
 
+  public String getIngredientsString() {
+    StringBuilder ingredientsListBuilder = new StringBuilder();
+    for (int i = 0; i < ingredients().size(); i++) {
+      Ingredient ingredient = ingredients().get(i);
+      ingredientsListBuilder
+          .append(i + 1)
+          .append(". ")
+          .append(capitalizeFirstLetter(ingredient.name()))
+          .append(" - ")
+          .append(ingredient.quantity())
+          .append(" ")
+          .append(ingredient.measure())
+          .append("\n");
+    }
+    return ingredientsListBuilder.toString().trim();
+  }
+
+  private String capitalizeFirstLetter(String original) {
+    if (original == null || original.length() == 0) {
+      return original;
+    }
+    return original.substring(0, 1).toUpperCase() + original.substring(1);
+  }
+
   @NonNull
   public static final Builder builder() {
     return new Builder();
