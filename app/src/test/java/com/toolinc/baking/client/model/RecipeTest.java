@@ -18,7 +18,7 @@ import static com.google.common.truth.Truth.assertThat;
 public final class RecipeTest {
 
   private static final String JSON =
-      JsonUnmarshallerHelper.toString(RecipeTest.class, "recipe.json");
+      JsonUnmarshallerHelper.toString(RecipeTest.class, "recipe_1.json");
   private static final JsonWriter JSON_WRITER =
       new JsonWriter(new PrintWriter(new ByteArrayOutputStream(10)));
   private static final ImmutableList<Ingredient> INGREDIENTS =
