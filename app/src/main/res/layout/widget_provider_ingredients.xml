@@ -1,18 +1,67 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
     android:padding="@dimen/widget_margin">
 
-    <TextView
-        android:id="@+id/appwidget_text"
-        style="@style/Widget.Shrine.TextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/shrine_standard_spacing"
-        android:layout_marginTop="@dimen/shrine_standard_spacing"
-        android:layout_marginEnd="@dimen/shrine_standard_spacing"
-        android:text="test"
-        android:textSize="@dimen/shrine_section_title_text_size" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/ll_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_recipe_name"
+                    style="@style/Widget.Shrine.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/shrine_small_spacing"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/shrine_section_title_text_size"
+                    tools:text="Nutella Pie" />
+
+                <TextView
+                    style="@style/Widget.Shrine.TextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:padding="@dimen/shrine_small_spacing"
+                    android:text="@string/ingredients"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="@dimen/shrine_section_title_text_size" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_ingredients_icon"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_margin="25dp"
+                android:contentDescription="@string/ingredients"
+                android:padding="@dimen/shrine_small_spacing"
+                android:src="@drawable/ic_ingredients_white" />
+        </LinearLayout>
+
+
+        <ListView
+            android:id="@+id/lv_ingredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_title"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/shrine_small_spacing" />
+    </RelativeLayout>
+</RelativeLayout>
