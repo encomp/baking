@@ -5,9 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.core.widget.NestedScrollView
+    <FrameLayout
         android:id="@+id/recipe_list_fragment"
-        android:name="com.toolinc.baking.ui.RecipeListFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

@@ -32,7 +32,7 @@ import butterknife.ButterKnife;
 public final class RecipeListFragment extends Fragment
     implements RecipeListAdapter.OnRecipeSelected, RecipeClient.RecipeCallback {
 
-  private static final int SCALING_FACTOR = 400;
+  private static final int SCALING_FACTOR = 300;
   private static final int COLUMN_THRESHOLD = 2;
   private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
