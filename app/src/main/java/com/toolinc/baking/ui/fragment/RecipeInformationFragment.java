@@ -16,8 +16,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /** Renders a specific {@link java.util.List} of ingredients and instructions. */
 public final class RecipeInformationFragment extends Fragment {
@@ -25,10 +23,10 @@ public final class RecipeInformationFragment extends Fragment {
   private static final String RECIPE_ARG = "RECIPE";
   private final IngredientListAdapter ingredientListAdapter = new IngredientListAdapter();
 
-  @BindView(R.id.rv_ingredients)
+  // @BindView(R.id.rv_ingredients)
   RecyclerView rvIngredients;
 
-  @BindView(R.id.rv_instructions)
+  // @BindView(R.id.rv_instructions)
   RecyclerView rvInstructions;
 
   private InstructionListAdapter instructionListAdapter;
@@ -48,7 +46,9 @@ public final class RecipeInformationFragment extends Fragment {
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_recipe_information, container, false);
-    ButterKnife.bind(this, view);
+    // ButterKnife.bind(this, view);
+    rvIngredients = view.findViewById(R.id.rv_ingredients);
+    rvInstructions = view.findViewById(R.id.rv_instructions);
 
     ingredientListAdapter.setIngredients(recipe.ingredients());
     rvIngredients.setLayoutManager(new LinearLayoutManager(getContext()));

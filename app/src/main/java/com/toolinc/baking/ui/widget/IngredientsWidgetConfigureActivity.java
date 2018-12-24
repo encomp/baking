@@ -18,8 +18,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Configures the set of {@link com.toolinc.baking.client.model.Step} that will be displayed on the
@@ -33,10 +31,10 @@ public final class IngredientsWidgetConfigureActivity extends AppCompatActivity
   private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
   private ImmutableList<Recipe> recipes;
 
-  @BindView(R.id.rv_recipe_list)
+  //@BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
 
-  @BindView(R.id.pb_loading_indicator)
+  //@BindView(R.id.pb_loading_indicator)
   ProgressBar contentLoadingProgressBar;
 
   @Override
@@ -44,7 +42,9 @@ public final class IngredientsWidgetConfigureActivity extends AppCompatActivity
     super.onCreate(savedInstanceState);
     setContentView(R.layout.widget_configure_recipes);
 
-    ButterKnife.bind(this);
+    //ButterKnife.bind(this);
+    rvRecipeList = findViewById(R.id.rv_recipe_list);
+    contentLoadingProgressBar = findViewById(R.id.pb_loading_indicator);
 
     Intent intent = getIntent();
     Bundle extras = intent.getExtras();

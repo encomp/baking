@@ -17,8 +17,6 @@ import com.toolinc.baking.ui.fragment.RecipeStepByStepFragment;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /** Activity that displays the recipe details such as ingredients and instructions. */
 public final class RecipeDetailActivity extends AppCompatActivity
@@ -32,17 +30,19 @@ public final class RecipeDetailActivity extends AppCompatActivity
   private NestedScrollView nsv_Video;
   private boolean tablet;
 
-  @BindView(R.id.fab_back)
+  // @BindView(R.id.fab_back)
   FloatingActionButton goBack;
 
-  @BindView(R.id.bottom_app_bar)
+  // @BindView(R.id.bottom_app_bar)
   BottomAppBar bottomAppBar;
 
   @Override
   protected void onCreate(Bundle bundle) {
     super.onCreate(bundle);
     setContentView(R.layout.activity_recipe_detail);
-    ButterKnife.bind(this);
+    // ButterKnife.bind(this);
+    goBack = findViewById(R.id.fab_back);
+    bottomAppBar = findViewById(R.id.bottom_app_bar);
 
     nsv_Video = findViewById(R.id.fl_recipe_detail_video);
     tablet = Optional.fromNullable(nsv_Video).isPresent();
