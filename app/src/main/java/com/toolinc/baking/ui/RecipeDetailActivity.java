@@ -15,7 +15,7 @@ import com.toolinc.baking.ui.fragment.RecipeInformationFragment;
 import com.toolinc.baking.ui.fragment.RecipeStepByStepFragment;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.core.widget.NestedScrollView;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +29,7 @@ public final class RecipeDetailActivity extends AppCompatActivity
   private RecipeStepByStepFragment recipeStepByStepFragment;
   private Recipe recipe;
   private StepsViewModel stepsViewModel;
-  private CoordinatorLayout cl_Video;
+  private NestedScrollView nsv_Video;
   private boolean tablet;
 
   @BindView(R.id.fab_back)
@@ -44,8 +44,8 @@ public final class RecipeDetailActivity extends AppCompatActivity
     setContentView(R.layout.activity_recipe_detail);
     ButterKnife.bind(this);
 
-    cl_Video = findViewById(R.id.fl_recipe_detail_video);
-    tablet = Optional.fromNullable(cl_Video).isPresent();
+    nsv_Video = findViewById(R.id.fl_recipe_detail_video);
+    tablet = Optional.fromNullable(nsv_Video).isPresent();
     goBack.setOnClickListener((view) -> finish());
 
     if (getIntent().hasExtra(Intent.EXTRA_KEY_EVENT)) {

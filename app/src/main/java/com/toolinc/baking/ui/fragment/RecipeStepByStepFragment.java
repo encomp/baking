@@ -30,7 +30,7 @@ public final class RecipeStepByStepFragment extends Fragment {
   private static final String VIDEO_POSITION = "VIDEO_POSITION";
   private Recipe recipe;
   private Step step;
-  private VideoPlayerViewModel mVideoPlayerViewModel;
+  private VideoPlayerViewModel videoPlayerViewModel;
   private VideoPlayerComponent videoPlayerComponent;
 
   @Override
@@ -39,9 +39,10 @@ public final class RecipeStepByStepFragment extends Fragment {
     recipe = (Recipe) getArguments().getSerializable(RECIPE_ARG);
     int stepNumber = getArguments().getInt(STEP_NUMBER_ARG);
     step = recipe.steps().get(stepNumber);
-    mVideoPlayerViewModel.setVideoUrl(step.videoUrl());
-    if (Optional.fromNullable(savedInstanceState).isPresent()) {
-      mVideoPlayerViewModel.setPosition(savedInstanceState.getLong(VIDEO_POSITION));
+    videoPlayerViewModel.setVideoUrl(step.videoUrl());
+    if (Optional.fromNullable(savedInstanceState).isPresent()
+        && Optional.fromNullable(savedInstanceState.getLong(VIDEO_POSITION)).isPresent()) {
+      videoPlayerViewModel.setPosition(savedInstanceState.getLong(VIDEO_POSITION));
     }
   }
 
@@ -59,7 +60,7 @@ public final class RecipeStepByStepFragment extends Fragment {
 
     videoPlayerComponent =
         new VideoPlayerComponent(
-            getContext(), fragmentRecipeStepByStepBinding, mVideoPlayerViewModel);
+            getContext(), fragmentRecipeStepByStepBinding, videoPlayerViewModel);
     getLifecycle().addObserver(videoPlayerComponent);
 
     return fragmentRecipeStepByStepBinding.getRoot();
@@ -68,13 +69,15 @@ public final class RecipeStepByStepFragment extends Fragment {
   @Override
   public void onSaveInstanceState(@NonNull Bundle outState) {
     super.onSaveInstanceState(outState);
-    outState.putLong(VIDEO_POSITION, mVideoPlayerViewModel.getPosition());
+    if (Optional.fromNullable(videoPlayerViewModel.getPosition()).isPresent()) {
+      outState.putLong(VIDEO_POSITION, videoPlayerViewModel.getPosition());
+    }
   }
 
   @Override
   public void onAttach(Context context) {
     super.onAttach(context);
-    mVideoPlayerViewModel =
+    videoPlayerViewModel =
         ViewModelProviders.of((RecipeDetailActivity) context).get(VideoPlayerViewModel.class);
   }
 
