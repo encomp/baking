@@ -9,7 +9,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.base.Optional;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
-import com.toolinc.baking.client.model.Step;
 import com.toolinc.baking.lifecycle.StepsViewModel;
 import com.toolinc.baking.ui.adapter.InstructionListAdapter;
 import com.toolinc.baking.ui.fragment.RecipeInformationFragment;
@@ -25,6 +24,7 @@ import butterknife.ButterKnife;
 public final class RecipeDetailActivity extends AppCompatActivity
     implements InstructionListAdapter.OnStepSelected {
 
+  private static final String RECIPE = "RECIPE";
   private RecipeInformationFragment recipeInformationFragment;
   private RecipeStepByStepFragment recipeStepByStepFragment;
   private Recipe recipe;
@@ -47,25 +47,51 @@ public final class RecipeDetailActivity extends AppCompatActivity
     cl_Video = findViewById(R.id.fl_recipe_detail_video);
     tablet = Optional.fromNullable(cl_Video).isPresent();
     goBack.setOnClickListener((view) -> finish());
+
     if (getIntent().hasExtra(Intent.EXTRA_KEY_EVENT)) {
       recipe = (Recipe) getIntent().getSerializableExtra(Intent.EXTRA_KEY_EVENT);
     }
+
     stepsViewModel = ViewModelProviders.of(this).get(StepsViewModel.class);
-    recipeInformationFragment = RecipeInformationFragment.create(recipe);
-    getSupportFragmentManager()
-        .beginTransaction()
-        .add(R.id.fl_recipe_detail_information, recipeInformationFragment)
-        .commit();
-    if (tablet) {
-      stepsViewModel.setSteps(recipe.steps(), 0);
-      onSelected(stepsViewModel.getCurrentStep(), 0);
+    if (Optional.fromNullable(bundle).isPresent()) {
+      if (!Optional.fromNullable(stepsViewModel.getCurrentStep()).isPresent()) {
+        stepsViewModel.setSteps(recipe.steps(), 0);
+      }
+      if (tablet) {
+        if (!Optional.fromNullable(recipeInformationFragment).isPresent()) {
+          recipeInformationFragment = RecipeInformationFragment.create(recipe);
+        }
+        if (!Optional.fromNullable(recipeStepByStepFragment).isPresent()) {
+          recipeStepByStepFragment =
+              RecipeStepByStepFragment.create(recipe, stepsViewModel.getCurrentStepIndex());
+        }
+        getSupportFragmentManager()
+            .beginTransaction()
+            .replace(R.id.fl_recipe_detail_information, recipeInformationFragment)
+            .commit();
+        initRecipeStepByStepFragment();
+      }
+    } else {
+      recipeInformationFragment = RecipeInformationFragment.create(recipe);
+      getSupportFragmentManager()
+          .beginTransaction()
+          .add(R.id.fl_recipe_detail_information, recipeInformationFragment)
+          .commit();
+      if (tablet) {
+        stepsViewModel.setSteps(recipe.steps(), 0);
+        onSelected(0);
+      }
     }
   }
 
   @Override
-  public void onSelected(Step step, int position) {
-    recipeStepByStepFragment = RecipeStepByStepFragment.create(step);
+  public void onSelected(int position) {
+    recipeStepByStepFragment = RecipeStepByStepFragment.create(recipe, position);
     stepsViewModel.setSteps(recipe.steps(), position);
+    initRecipeStepByStepFragment();
+  }
+
+  private void initRecipeStepByStepFragment() {
     bottomAppBar.replaceMenu(R.menu.menu_navigaton);
     bottomAppBar
         .getMenu()
@@ -83,8 +109,7 @@ public final class RecipeDetailActivity extends AppCompatActivity
     } else {
       getSupportFragmentManager()
           .beginTransaction()
-          .detach(recipeInformationFragment)
-          .add(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
+          .replace(R.id.fl_recipe_detail_information, recipeStepByStepFragment)
           .commit();
     }
   }
@@ -93,12 +118,14 @@ public final class RecipeDetailActivity extends AppCompatActivity
     switch (item.getItemId()) {
       case R.id.mi_next_step:
         stepsViewModel.nextStep();
-        updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
+        updateStepFragment(
+            RecipeStepByStepFragment.create(recipe, stepsViewModel.getCurrentStepIndex()));
         return true;
 
       case R.id.mi_prior_step:
         stepsViewModel.priorStep();
-        updateStepFragment(RecipeStepByStepFragment.create(stepsViewModel.getCurrentStep()));
+        updateStepFragment(
+            RecipeStepByStepFragment.create(recipe, stepsViewModel.getCurrentStepIndex()));
         return true;
     }
     return false;

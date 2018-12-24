@@ -39,4 +39,8 @@ public final class StepsViewModel extends ViewModel {
   public Step getCurrentStep() {
     return stepLiveData.getValue();
   }
+
+  public int getCurrentStepIndex() {
+    return stepPositionLiveData.getValue();
+  }
 }

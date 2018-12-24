@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 
 import com.google.common.base.Optional;
 import com.toolinc.baking.R;
+import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Step;
 import com.toolinc.baking.databinding.FragmentRecipeStepByStepBinding;
 import com.toolinc.baking.lifecycle.VideoPlayerViewModel;
@@ -24,11 +25,25 @@ import androidx.lifecycle.ViewModelProviders;
 public final class RecipeStepByStepFragment extends Fragment {
 
   private static final String TAG = RecipeStepByStepFragment.class.getSimpleName();
-  private static final String STEP_ARG = "STEP";
+  private static final String RECIPE_ARG = "RECIPE";
+  private static final String STEP_NUMBER_ARG = "STEP_NUMBER";
+  private static final String VIDEO_POSITION = "VIDEO_POSITION";
+  private Recipe recipe;
   private Step step;
   private VideoPlayerViewModel mVideoPlayerViewModel;
   private VideoPlayerComponent videoPlayerComponent;
-  private RecipeDetailActivity mActivity;
+
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    recipe = (Recipe) getArguments().getSerializable(RECIPE_ARG);
+    int stepNumber = getArguments().getInt(STEP_NUMBER_ARG);
+    step = recipe.steps().get(stepNumber);
+    mVideoPlayerViewModel.setVideoUrl(step.videoUrl());
+    if (Optional.fromNullable(savedInstanceState).isPresent()) {
+      mVideoPlayerViewModel.setPosition(savedInstanceState.getLong(VIDEO_POSITION));
+    }
+  }
 
   @Nullable
   @Override
@@ -51,21 +66,16 @@ public final class RecipeStepByStepFragment extends Fragment {
   }
 
   @Override
-  public void onAttach(Context context) {
-    super.onAttach(context);
-    mActivity = (RecipeDetailActivity) context;
-    mVideoPlayerViewModel = ViewModelProviders.of(mActivity).get(VideoPlayerViewModel.class);
-    mVideoPlayerViewModel.setVideoUrl(step.videoUrl());
+  public void onSaveInstanceState(@NonNull Bundle outState) {
+    super.onSaveInstanceState(outState);
+    outState.putLong(VIDEO_POSITION, mVideoPlayerViewModel.getPosition());
   }
 
   @Override
-  public void setArguments(@Nullable Bundle bundle) {
-    if (Optional.fromNullable(bundle).isPresent()
-        && Optional.fromNullable(bundle.get(STEP_ARG)).isPresent()) {
-      step = (Step) bundle.getSerializable(STEP_ARG);
-    } else {
-      throw new IllegalArgumentException("Unable to locate a Step.");
-    }
+  public void onAttach(Context context) {
+    super.onAttach(context);
+    mVideoPlayerViewModel =
+        ViewModelProviders.of((RecipeDetailActivity) context).get(VideoPlayerViewModel.class);
   }
 
   @Override
@@ -76,10 +86,11 @@ public final class RecipeStepByStepFragment extends Fragment {
     }
   }
 
-  public static final RecipeStepByStepFragment create(Step step) {
+  public static final RecipeStepByStepFragment create(Recipe recipe, int stepNumber) {
     RecipeStepByStepFragment recipeStepByStepFragment = new RecipeStepByStepFragment();
     Bundle bundle = new Bundle();
-    bundle.putSerializable(STEP_ARG, step);
+    bundle.putSerializable(RECIPE_ARG, recipe);
+    bundle.putInt(STEP_NUMBER_ARG, stepNumber);
     recipeStepByStepFragment.setArguments(bundle);
     return recipeStepByStepFragment;
   }

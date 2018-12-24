@@ -15,6 +15,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.common.base.Optional;
 import com.google.common.base.Strings;
 import com.toolinc.baking.BakingApplication;
 import com.toolinc.baking.R;
@@ -122,13 +123,19 @@ public final class VideoPlayerComponent implements LifecycleObserver, Player.Eve
               .createMediaSource(Uri.parse(videoPlayerViewModel.getVideoUrl()));
       fragmentBinding.pvVideo.setPlayer(mExoPlayer);
       mExoPlayer.prepare(mediaSource);
+      if (Optional.fromNullable(videoPlayerViewModel.getPosition()).isPresent()) {
+        mExoPlayer.seekTo(videoPlayerViewModel.getPosition());
+        mExoPlayer.setPlayWhenReady(true);
+      }
     } else {
       showPlayerErrorMessage(context.getString(R.string.error_no_video));
     }
   }
 
   public void releasePlayer() {
-    if (fragmentBinding.pvVideo != null && mExoPlayer != null) {
+    if (Optional.fromNullable(fragmentBinding.pvVideo).isPresent()
+        && Optional.fromNullable(mExoPlayer).isPresent()) {
+      videoPlayerViewModel.setPosition(mExoPlayer.getCurrentPosition());
       mExoPlayer.stop();
       mExoPlayer.release();
       mExoPlayer = null;

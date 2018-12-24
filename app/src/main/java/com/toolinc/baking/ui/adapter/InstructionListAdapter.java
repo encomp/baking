@@ -61,8 +61,8 @@ public final class InstructionListAdapter
   /** Specifies the behavior upon selection of a {@link Step}. */
   public interface OnStepSelected {
 
-    /** Specifies the step and its position that has been selected by the user. */
-    void onSelected(Step step, int position);
+    /** Specifies the step position that has been selected by the user. */
+    void onSelected(int position);
   }
 
   /** Describes a {@link Step} item about its place within the RecyclerView. */
@@ -79,7 +79,7 @@ public final class InstructionListAdapter
 
     @Override
     public void onClick(View v) {
-      onStepSelected.onSelected(instructions.get(getAdapterPosition()), getAdapterPosition());
+      onStepSelected.onSelected(getAdapterPosition());
     }
   }
 }

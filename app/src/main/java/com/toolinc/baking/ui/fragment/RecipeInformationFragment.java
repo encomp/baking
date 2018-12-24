@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.common.base.Optional;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.ui.adapter.IngredientListAdapter;
@@ -25,20 +24,21 @@ public final class RecipeInformationFragment extends Fragment {
 
   private static final String RECIPE_ARG = "RECIPE";
   private final IngredientListAdapter ingredientListAdapter = new IngredientListAdapter();
+
   @BindView(R.id.rv_ingredients)
   RecyclerView rvIngredients;
+
   @BindView(R.id.rv_instructions)
   RecyclerView rvInstructions;
+
   private InstructionListAdapter instructionListAdapter;
   private InstructionListAdapter.OnStepSelected onStepSelected;
   private Recipe recipe;
 
-  public static final RecipeInformationFragment create(Recipe recipe) {
-    RecipeInformationFragment recipeInformationFragment = new RecipeInformationFragment();
-    Bundle bundle = new Bundle();
-    bundle.putSerializable(RECIPE_ARG, recipe);
-    recipeInformationFragment.setArguments(bundle);
-    return recipeInformationFragment;
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    recipe = (Recipe) getArguments().getSerializable(RECIPE_ARG);
   }
 
   @Nullable
@@ -67,13 +67,11 @@ public final class RecipeInformationFragment extends Fragment {
     onStepSelected = (InstructionListAdapter.OnStepSelected) context;
   }
 
-  @Override
-  public void setArguments(@Nullable Bundle bundle) {
-    if (Optional.fromNullable(bundle).isPresent()
-        && Optional.fromNullable(bundle.get(RECIPE_ARG)).isPresent()) {
-      recipe = (Recipe) bundle.getSerializable(RECIPE_ARG);
-    } else {
-      throw new IllegalArgumentException("Unable to find a recipe.");
-    }
+  public static final RecipeInformationFragment create(Recipe recipe) {
+    RecipeInformationFragment recipeInformationFragment = new RecipeInformationFragment();
+    Bundle bundle = new Bundle();
+    bundle.putSerializable(RECIPE_ARG, recipe);
+    recipeInformationFragment.setArguments(bundle);
+    return recipeInformationFragment;
   }
 }

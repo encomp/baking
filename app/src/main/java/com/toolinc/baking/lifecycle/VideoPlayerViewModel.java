@@ -13,7 +13,7 @@ public final class VideoPlayerViewModel extends ViewModel {
     mldPosition.setValue(position);
   }
 
-  public long getPosition() {
+  public Long getPosition() {
     return mldPosition.getValue();
   }
 
