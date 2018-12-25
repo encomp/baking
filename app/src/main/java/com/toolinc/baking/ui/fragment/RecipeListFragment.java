@@ -25,6 +25,8 @@ import androidx.core.widget.ContentLoadingProgressBar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /** Renders a specific {@link java.util.List} of recipes. */
 public final class RecipeListFragment extends Fragment
@@ -37,10 +39,10 @@ public final class RecipeListFragment extends Fragment
   private final RecipeClient recipeClient = new RecipeClient(this);
   private Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
 
-  // @BindView(R.id.rv_recipe_list)
+  @BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
 
-  // @BindView(R.id.clpb_loading_indicator)
+  @BindView(R.id.clpb_loading_indicator)
   ContentLoadingProgressBar contentLoadingProgressBar;
 
   private ImmutableList<Recipe> recipes;
@@ -52,10 +54,7 @@ public final class RecipeListFragment extends Fragment
       @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     final View view = inflater.inflate(R.layout.fragment_recipe_list, container, false);
-    //ButterKnife.bind(this, view);
-
-    rvRecipeList = view.findViewById(R.id.rv_recipe_list);
-    contentLoadingProgressBar = view.findViewById(R.id.clpb_loading_indicator);
+    ButterKnife.bind(this, view);
 
     GridLayoutManager layoutManager =
         new GridLayoutManager(getContext(), calculateNoOfColumns(getContext()));
