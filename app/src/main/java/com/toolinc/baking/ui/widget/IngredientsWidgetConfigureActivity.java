@@ -14,12 +14,15 @@ import com.toolinc.baking.client.RecipeClient;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.ui.adapter.RecipeListAdapter;
 
+import javax.inject.Inject;
+
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
 
 /**
  * Configures the set of {@link com.toolinc.baking.client.model.Step} that will be displayed on the
@@ -29,9 +32,9 @@ public final class IngredientsWidgetConfigureActivity extends AppCompatActivity
     implements RecipeListAdapter.OnRecipeSelected, RecipeClient.RecipeCallback {
 
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
-  private final RecipeClient recipeClient = new RecipeClient(this);
   private int appWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
   private ImmutableList<Recipe> recipes;
+  @Inject RecipeClient recipeClient;
 
   @BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
@@ -41,6 +44,7 @@ public final class IngredientsWidgetConfigureActivity extends AppCompatActivity
 
   @Override
   protected void onCreate(@Nullable Bundle savedInstanceState) {
+    AndroidInjection.inject(this);
     super.onCreate(savedInstanceState);
     setContentView(R.layout.widget_configure_recipes);
 
@@ -65,7 +69,7 @@ public final class IngredientsWidgetConfigureActivity extends AppCompatActivity
   public void fetchMovies() {
     contentLoadingProgressBar.setVisibility(View.VISIBLE);
     Toast.makeText(this, R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
-    recipeClient.fetchMovies(Optional.absent());
+    recipeClient.fetchMovies(this, Optional.absent());
   }
 
   @Override

@@ -18,6 +18,8 @@ import com.toolinc.baking.test.BakingIdlingResource;
 import com.toolinc.baking.ui.RecipeDetailActivity;
 import com.toolinc.baking.ui.adapter.RecipeListAdapter;
 
+import javax.inject.Inject;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
@@ -27,6 +29,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.AndroidInjection;
+import dagger.android.support.AndroidSupportInjection;
 
 /** Renders a specific {@link java.util.List} of recipes. */
 public final class RecipeListFragment extends Fragment
@@ -36,8 +40,8 @@ public final class RecipeListFragment extends Fragment
   private static final int COLUMN_THRESHOLD = 2;
   private static final int MIN_NUM_COLS = 1;
   private final RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this);
-  private final RecipeClient recipeClient = new RecipeClient(this);
   private Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
+  @Inject RecipeClient recipeClient;
 
   @BindView(R.id.rv_recipe_list)
   RecyclerView rvRecipeList;
@@ -64,10 +68,16 @@ public final class RecipeListFragment extends Fragment
     return view;
   }
 
+  @Override
+  public void onAttach(Context context) {
+    AndroidSupportInjection.inject(this);
+    super.onAttach(context);
+  }
+
   public void fetchMovies() {
     contentLoadingProgressBar.show();
     Toast.makeText(getContext(), R.string.recipe_loading_message, Toast.LENGTH_SHORT).show();
-    recipeClient.fetchMovies(bakingIdlingResource);
+    recipeClient.fetchMovies(this, bakingIdlingResource);
   }
 
   @Override

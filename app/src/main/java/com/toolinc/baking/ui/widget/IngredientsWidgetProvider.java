@@ -11,12 +11,15 @@ import android.widget.RemoteViews;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.ImmutableList;
+import com.toolinc.baking.BakingApplication;
 import com.toolinc.baking.R;
 import com.toolinc.baking.client.RecipeClient;
 import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.ui.RecipeDetailActivity;
 
 import java.util.Random;
+
+import javax.inject.Inject;
 
 /**
  * Display a {@link com.google.common.collect.ImmutableList} of {@link
@@ -25,9 +28,8 @@ import java.util.Random;
 public final class IngredientsWidgetProvider extends AppWidgetProvider
     implements RecipeClient.RecipeCallback {
 
-  private final RecipeClient recipeClient = new RecipeClient(this);
-
   private Context context;
+  @Inject RecipeClient recipeClient;
 
   static void updateAppWidget(
       Context context, AppWidgetManager appWidgetManager, int appWidgetId, Recipe recipe) {
@@ -49,7 +51,16 @@ public final class IngredientsWidgetProvider extends AppWidgetProvider
   @Override
   public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
     this.context = context;
-    recipeClient.fetchMovies(Optional.absent());
+    inject(context);
+    recipeClient.fetchMovies(this, Optional.absent());
+  }
+
+  private void inject(Context context) {
+    if (recipeClient == null) {
+      ((BakingApplication) context.getApplicationContext())
+          .getIngredientsWidgetComponent()
+          .inject(this);
+    }
   }
 
   @Override

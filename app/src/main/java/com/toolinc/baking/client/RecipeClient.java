@@ -6,6 +6,9 @@ import com.toolinc.baking.client.model.Recipe;
 import com.toolinc.baking.client.model.Recipes;
 import com.toolinc.baking.test.BakingIdlingResource;
 
+import javax.inject.Inject;
+import javax.inject.Provider;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,15 +18,19 @@ import static com.google.common.base.Preconditions.checkNotNull;
 /** Performs a Rest API call to extract a {@link ImmutableList} of {@link Recipe}. */
 public final class RecipeClient implements Callback<Recipes> {
 
-  private final RecipeCallback recipeCallback;
+  private final Provider<BakingClient> bakingClient;
   private Optional<BakingIdlingResource> bakingIdlingResource = Optional.absent();
+  private RecipeCallback recipeCallback;
   private Call<Recipes> recipesCall;
 
-  public RecipeClient(RecipeCallback recipeCallback) {
-    this.recipeCallback = checkNotNull(recipeCallback, "RecipeCallback is missing.");
+  @Inject
+  public RecipeClient(Provider<BakingClient> bakingClient) {
+    this.bakingClient = checkNotNull(bakingClient, "BakingClient is missing.");
   }
 
-  public void fetchMovies(Optional<BakingIdlingResource> bakingIdlingResource) {
+  public void fetchMovies(
+      RecipeCallback recipeCallback, Optional<BakingIdlingResource> bakingIdlingResource) {
+    this.recipeCallback = checkNotNull(recipeCallback, "RecipeCallback is missing.");
     if (bakingIdlingResource.isPresent()) {
       this.bakingIdlingResource = bakingIdlingResource;
       this.bakingIdlingResource.get().idle();
@@ -31,7 +38,7 @@ public final class RecipeClient implements Callback<Recipes> {
     if (Optional.fromNullable(recipesCall).isPresent()) {
       recipesCall.cancel();
     }
-    recipesCall = BakingClient.create().recipes();
+    recipesCall = bakingClient.get().recipes();
     recipesCall.enqueue(this);
   }
 
